@@ -1,4 +1,4 @@
-package com.example.project001.data
+package com.example.project5g.data
 
 data class Customer(
     var id: String? = null,

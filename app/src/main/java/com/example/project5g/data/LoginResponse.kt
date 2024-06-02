@@ -1,4 +1,4 @@
-package com.example.project001.data
+package com.example.project5g.data
 
 data class LoginResponse(
     // Define properties of your login response

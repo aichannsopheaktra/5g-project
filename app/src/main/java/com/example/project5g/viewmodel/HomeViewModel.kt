@@ -1,15 +1,14 @@
-package com.example.project001.viewmodel
+package com.example.project5g.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.project001.data.CartItem
-import com.example.project001.data.Customer
-import com.example.project001.data.HomeRepository
-import com.example.project001.data.LoginRequest
-import com.example.project001.data.LoginResponse
-import com.example.project001.data.Product
+import com.example.project5g.data.CartItem
+import com.example.project5g.data.Customer
+import com.example.project5g.data.HomeRepository
+import com.example.project5g.data.LoginRequest
+import com.example.project5g.data.LoginResponse
+import com.example.project5g.data.Product
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

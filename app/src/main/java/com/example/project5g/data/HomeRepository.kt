@@ -1,11 +1,8 @@
-package com.example.project001.data
+package com.example.project5g.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.project001.api.ApiInterface
-import com.example.project001.data.CartItem
-import com.example.project001.data.LoginRequest
-import com.example.project001.data.LoginResponse
+import com.example.project5g.api.ApiInterface
 import retrofit2.Call
 import retrofit2.Callback
 

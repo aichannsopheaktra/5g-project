@@ -1,4 +1,4 @@
-package com.example.project001.ui
+package com.example.project5g.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +8,12 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.project001.R
-import com.example.project001.api.ApiClient
-import com.example.project001.api.ApiInterface
-import com.example.project001.data.HomeRepository
-import com.example.project001.viewmodel.HomeViewModel
-import com.example.project001.viewmodel.HomeViewModelFactory
+import com.example.project5g.R
+import com.example.project5g.api.ApiClient
+import com.example.project5g.api.ApiInterface
+import com.example.project5g.data.HomeRepository
+import com.example.project5g.viewmodel.HomeViewModel
+import com.example.project5g.viewmodel.HomeViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
 

@@ -1,8 +1,8 @@
-package com.example.project001.viewmodel
+package com.example.project5g.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.project001.data.HomeRepository
+import com.example.project5g.data.HomeRepository
 
 class HomeViewModelFactory(private val homeRepository: HomeRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

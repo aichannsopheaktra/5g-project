@@ -1,10 +1,10 @@
-package com.example.project001.api
+package com.example.project5g.api
 
-import com.example.project001.data.CartItem
-import com.example.project001.data.Customer
-import com.example.project001.data.LoginRequest
-import com.example.project001.data.LoginResponse
-import com.example.project001.data.Product
+import com.example.project5g.data.CartItem
+import com.example.project5g.data.Customer
+import com.example.project5g.data.LoginRequest
+import com.example.project5g.data.LoginResponse
+import com.example.project5g.data.Product
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

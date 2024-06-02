@@ -1,12 +1,12 @@
-package com.example.project001.ui
+package com.example.project5g.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.project001.R
-import com.example.project001.data.Customer
+import com.example.project5g.R
+import com.example.project5g.data.Customer
 
 class AccountAdapter(private var customers: ArrayList<Customer>) : RecyclerView.Adapter<AccountAdapter.CustomerViewHolder>() {
 

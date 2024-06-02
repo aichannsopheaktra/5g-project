@@ -1,4 +1,4 @@
-package com.example.project001.ui
+package com.example.project5g.ui
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.project001.R
+import com.example.project5g.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

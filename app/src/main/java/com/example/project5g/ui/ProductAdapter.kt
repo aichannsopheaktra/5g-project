@@ -1,4 +1,4 @@
-package com.example.project001.ui
+package com.example.project5g.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.project001.R
-import com.example.project001.data.Product
-import com.example.project001.viewmodel.HomeViewModel
+import com.example.project5g.R
+import com.example.project5g.data.Product
+import com.example.project5g.viewmodel.HomeViewModel
 
 class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     private var prodata: ArrayList<Product>? = null
