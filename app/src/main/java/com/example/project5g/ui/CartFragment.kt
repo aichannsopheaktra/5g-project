@@ -1,9 +1,12 @@
 package com.example.project5g.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -43,8 +46,24 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         recyclerView = view.findViewById(R.id.recyclerViewCart)
         progressBar = view.findViewById(R.id.progress)
         totalTextView = view.findViewById(R.id.totalTextView)
+        view.findViewById<Button>(R.id.payButton).setOnClickListener {
+            showConfirmationDialog()
+        }
         initAdapter()
         return view
+    }
+    private fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Confirm Payment")
+            .setMessage("Are you sure you want to proceed with the payment?")
+            .setPositiveButton("Yes") { _, _ ->
+                // User clicked "Yes," handle payment logic here
+                viewModel.purchase()
+            }
+            .setNegativeButton("Cancel") { _, _ ->
+                // User clicked "Cancel," do nothing
+            }
+            .show()
     }
 
     private fun initAdapter() {

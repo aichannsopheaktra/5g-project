@@ -15,11 +15,11 @@ import retrofit2.Response
 
 class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
-    private val _productData = MutableLiveData<List<Product>?>()
-    val productData: LiveData<List<Product>?> get() = _productData
+    private val _productData = MutableLiveData<List<Product>>()
+    val productData: LiveData<List<Product>> get() = _productData
 
-    private val _customerData = MutableLiveData<List<Customer>?>()
-    val customerData: LiveData<List<Customer>?> get() = _customerData
+    private val _customerData = MutableLiveData<List<Customer>>()
+    val customerData: LiveData<List<Customer>> get() = _customerData
 
     private val _loginResponse = MutableLiveData<LoginResponse?>()
     val loginResponse: LiveData<LoginResponse?> get() = _loginResponse
@@ -33,31 +33,32 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                 if (response.isSuccessful) {
                     _productData.value = response.body()
                 } else {
-                    _productData.value = null
+                    _productData.value = emptyList()
                 }
             }
 
             override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                _productData.value = null
+                _productData.value = emptyList()
             }
         })
     }
 
-    fun fetchCustomers() {
+    fun fetchCustomer() {
         homeRepository.getCustomer().enqueue(object : Callback<List<Customer>> {
             override fun onResponse(call: Call<List<Customer>>, response: Response<List<Customer>>) {
                 if (response.isSuccessful) {
                     _customerData.value = response.body()
                 } else {
-                    _customerData.value = null
+                    _customerData.value = emptyList() // Handle the case where the response is not successful
                 }
             }
 
             override fun onFailure(call: Call<List<Customer>>, t: Throwable) {
-                _customerData.value = null
+                _customerData.value = emptyList() // Handle failure
             }
         })
     }
+
 
     fun loginUser(username: String, password: String) {
         val loginRequest = LoginRequest(username, password)
@@ -105,6 +106,17 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     fun reduceCart(productId: String) {
         homeRepository.reduceCart(productId).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                // Handle response if needed
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                // Handle failure if needed
+            }
+        })
+    }
+    fun purchase() {
+        homeRepository.purchase().enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 // Handle response if needed
             }

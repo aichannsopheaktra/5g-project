@@ -8,24 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.project5g.R
 import com.example.project5g.api.ApiClient
 import com.example.project5g.api.ApiInterface
-import com.example.project5g.data.HomeRepository
 import com.example.project5g.data.Customer
+import com.example.project5g.data.HomeRepository
 import com.example.project5g.viewmodel.HomeViewModel
 import com.example.project5g.viewmodel.HomeViewModelFactory
 
 class AccountFragment : Fragment(R.layout.fragment_account) {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: AccountAdapter
-    private lateinit var progressBar: ProgressBar
     private lateinit var logoutButton: Button
+    private lateinit var customerName: TextView
+    private lateinit var customerEmail: TextView
+    private lateinit var progressBar: ProgressBar
 
     private val factory: HomeViewModelFactory by lazy {
         val apiInterface = ApiClient.instance.create(ApiInterface::class.java)
@@ -42,11 +41,10 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_account, container, false)
 
-        recyclerView = view.findViewById(R.id.recyclerView)
-        progressBar = view.findViewById(R.id.progressBar)
+        customerName = view.findViewById(R.id.customerName)
+        customerEmail = view.findViewById(R.id.customerEmail)
         logoutButton = view.findViewById(R.id.logoutButton)
-
-        initAdapter()
+        progressBar = view.findViewById(R.id.progress)
 
         logoutButton.setOnClickListener {
             // Clear the authentication token from SharedPreferences
@@ -61,13 +59,6 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         return view
     }
 
-    private fun initAdapter() {
-        adapter = AccountAdapter(ArrayList()) // Pass an empty list initially
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
-    }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
@@ -75,11 +66,26 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
     private fun initViewModel() {
         viewModel.customerData.observe(viewLifecycleOwner, Observer { customers ->
-            recyclerView.visibility = View.VISIBLE
-            adapter.setCustomerData(customers as ArrayList<Customer>)
-            progressBar.visibility = View.GONE
+            if (customers.size > 1) {
+                val customer = customers[0]
+                displayCustomerData(customer)
+                progressBar.visibility = View.GONE
+            } else {
+                // Handle case where there is no customer at index 1
+                displayCustomerData(null)
+            }
         })
 
-        viewModel.fetchCustomers()
+        viewModel.fetchCustomer()
+    }
+
+    private fun displayCustomerData(customer: Customer?) {
+        if (customer != null) {
+            customerName.text = customer.name
+            customerEmail.text = customer.email
+        } else {
+//            customerName.text = getString(R.string.default_customer_name)
+//            customerEmail.text = getString(R.string.default_customer_email)
+        }
     }
 }

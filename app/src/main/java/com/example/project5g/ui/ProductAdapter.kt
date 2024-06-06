@@ -1,5 +1,7 @@
 package com.example.project5g.ui
 
+import android.app.AlertDialog
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,6 +74,7 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
                 itemView.findViewById<Button>(R.id.addButton1).setOnClickListener {
                     item.id?.let { productId ->
                         viewModel.addToCart(productId)
+                        showSuccessDialog()
                     }
                 }
             }
@@ -89,10 +92,23 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
                 itemView.findViewById<Button>(R.id.addButton2).setOnClickListener {
                     item.id?.let { productId ->
                         viewModel.addToCart(productId)
+                        showSuccessDialog()
                     }
                 }
                 cardView2.visibility = View.VISIBLE
             }
+        }
+        private fun showSuccessDialog() {
+            val builder = AlertDialog.Builder(itemView.context)
+            builder.setTitle("Success")
+                .setMessage("Item added to cart successfully!")
+            val dialog = builder.create()
+            dialog.show()
+            // Delay the dismissal of the dialog
+            val handler = Handler()
+            handler.postDelayed({
+                dialog.dismiss()
+            }, 1000) // 1000 milliseconds = 1 second
         }
         fun hideView2() {
             cardView2.visibility = View.INVISIBLE
