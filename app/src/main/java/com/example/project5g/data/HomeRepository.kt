@@ -74,6 +74,7 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         val headers=HashMap<String,String>()
         headers["Authorization"] = "Bearer $token"
         apiInterface.getPurchases(headers).enqueue(callback)
+    }
     fun purchase(): Call<Void> {
         checkTokenValidity()
         val headers = HashMap<String, String>()
