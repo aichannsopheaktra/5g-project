@@ -34,4 +34,10 @@ class HomeRepository(private val apiInterface: ApiInterface, context: Context) {
         headers["Authorization"] = "Bearer $token"
         return apiInterface.cart("CustomerAPI/reduce-cart?ProductId=$productId", headers)
     }
+
+    fun getPurchases(callback: Callback<List<Purchases>>){
+        val headers=HashMap<String,String>()
+        headers["Authorization"] = "Bearer $token"
+        apiInterface.getPurchases(headers).enqueue(callback)
+    }
 }

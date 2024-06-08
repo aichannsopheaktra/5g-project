@@ -9,6 +9,7 @@ import com.example.project5g.data.HomeRepository
 import com.example.project5g.data.LoginRequest
 import com.example.project5g.data.LoginResponse
 import com.example.project5g.data.Product
+import com.example.project5g.data.Purchases
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,6 +27,9 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     private val _cartData = MutableLiveData<List<CartItem>?>()
     val cartData: LiveData<List<CartItem>?> get() = _cartData
+
+    private val _purchaseData= MutableLiveData<List<Purchases>?>()
+    val  purchaseData: LiveData<List<Purchases>?> get() = _purchaseData
 
     fun fetchProduct() {
         homeRepository.getProduct().enqueue(object : Callback<List<Product>> {
@@ -114,5 +118,26 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             }
         })
     }
+
+    fun fetchPurchase(){
+        homeRepository.getPurchases(object : Callback<List<Purchases>>{
+            override fun onResponse(call: Call<List<Purchases>>, response: Response<List<Purchases>>) {
+                if(response.isSuccessful){
+                    _purchaseData.value = response.body();
+                    System.out.println(_purchaseData.value);
+                }else{
+                    _purchaseData.value=null
+                }
+            }
+
+            override fun onFailure(call: Call<List<Purchases>>, t: Throwable) {
+                _purchaseData.value=null
+                System.out.println(t.message);
+                System.out.println("Fail");
+            }
+
+        })
+    }
+
 
 }

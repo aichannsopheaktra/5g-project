@@ -5,6 +5,7 @@ import com.example.project5g.data.Customer
 import com.example.project5g.data.LoginRequest
 import com.example.project5g.data.LoginResponse
 import com.example.project5g.data.Product
+import com.example.project5g.data.Purchases
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -27,5 +28,8 @@ interface ApiInterface {
 
     @GET
     fun cart(@Url url: String, @HeaderMap headers: Map<String, String>): Call<Void>
+
+    @GET("CustomerAPI/purchases")
+    fun getPurchases(@HeaderMap headers: Map<String, String>): Call<List<Purchases>>
 
 }
