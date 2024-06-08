@@ -6,9 +6,12 @@ import com.example.project5g.data.LoginRequest
 import com.example.project5g.data.LoginResponse
 import com.example.project5g.data.Product
 import com.example.project5g.data.Purchases
+import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 import retrofit2.http.Url
@@ -31,5 +34,8 @@ interface ApiInterface {
 
     @GET("CustomerAPI/purchases")
     fun getPurchases(@HeaderMap headers: Map<String, String>): Call<List<Purchases>>
+    
+    @POST("CustomerAPI/purchase")
+    fun purchase(@HeaderMap headers: Map<String, String>): Call<Void>
 
 }

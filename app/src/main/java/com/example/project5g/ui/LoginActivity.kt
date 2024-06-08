@@ -14,6 +14,7 @@ import com.example.project5g.api.ApiInterface
 import com.example.project5g.data.HomeRepository
 import com.example.project5g.viewmodel.HomeViewModel
 import com.example.project5g.viewmodel.HomeViewModelFactory
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -38,20 +39,27 @@ class LoginActivity : AppCompatActivity() {
 
             homeViewModel.loginResponse.observe(this, Observer { loginResponse ->
                 if (loginResponse != null) {
-                    val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
-                    with(sharedPreferences.edit()) {
-                        putString("AUTH_TOKEN", loginResponse.token)
-                        apply()
-                    }
-                    val intent = Intent(this, MainActivity::class.java).apply {
-                        putExtra("AUTH_TOKEN", loginResponse.token)
-                    }
-                    startActivity(intent)
-                    finish()
+                    saveAuthToken(loginResponse.token)
+                    navigateToMainActivity()
                 } else {
                     Log.e("LoginActivity", "Login failed")
                 }
             })
         }
+    }
+
+    private fun saveAuthToken(token: String) {
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putString("AUTH_TOKEN", token)
+            putLong("TOKEN_TIMESTAMP", Calendar.getInstance().timeInMillis)
+            apply()
+        }
+    }
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
