@@ -1,5 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#DE5B00" />
+<!-- button_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#FF5722" /> <!-- Example color, change to your desired color -->
     <corners android:radius="5dp" />
+    <gradient
+        android:startColor="#EB3944"
+        android:endColor="#F67723"
+        android:angle="0"/>
+
+    <!-- Example radius, change to your desired radius -->
 </shape>

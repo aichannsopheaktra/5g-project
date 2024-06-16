@@ -6,12 +6,6 @@
     android:padding="16dp"
     tools:context=".ui.LoginActivity">
 
-    <!-- Background overlay to darken the screen -->
-    <View
-        android:layout_width="800dp"
-        android:layout_height="715dp"
-        android:background="#80000000" /> <!-- Adjust the alpha and color as needed -->
-
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -44,12 +38,12 @@
                 android:layout_below="@id/loginLabel"
                 android:orientation="vertical"
                 android:padding="16dp"
+                android:layout_marginTop="16dp"
                 tools:ignore="ExtraText">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="16dp">
+                    android:layout_height="48dp">
 
                     <EditText
                         android:id="@+id/usernameEditText"
@@ -59,7 +53,6 @@
                         android:hint="Username"
                         android:inputType="text"
                         android:theme="@style/EditTextOrangeUnderline" />
-
                     <ImageView
                         android:id="@+id/eyeIcon"
                         android:layout_width="55dp"
@@ -71,7 +64,6 @@
                         android:padding="8dp"
                         android:src="@drawable/user" />
                 </RelativeLayout>
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -88,7 +80,6 @@
                         android:fontFamily="sans-serif" />
 
                     <ImageView
-                        android:id="@+id/eyeIcon"
                         android:layout_width="55dp"
                         android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
@@ -99,6 +90,7 @@
                         android:src="@drawable/user" />
                 </RelativeLayout>
 
+                <!-- Remember Me CheckBox -->
                 <CheckBox
                     android:id="@+id/rememberMeCheckBox"
                     android:layout_width="wrap_content"
@@ -107,12 +99,13 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="sans-serif" />
 
-                <!-- Centering the Login Button -->
+                <!-- Login Button -->
                 <Button
                     android:id="@+id/loginButton"
-                    android:layout_width="match_parent"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:layout_gravity="center_horizontal"
                     android:background="@drawable/button_background"
                     android:text="Login"
                     android:textColor="#FFFFFF"
@@ -150,5 +143,4 @@
             </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-
 </RelativeLayout>
