@@ -86,12 +86,10 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         apiInterface.getPurchases(headers).enqueue(callback)
     }
 
-    fun getHomeProduct(type: String): Call<Void> {
+    fun getHomeProduct(type: String): Call<List<HomeProduct>> {
         checkTokenValidity()
         val headers = HashMap<String, String>()
-        headers["Authorization"] = "Bearer $token"
-        return apiInterface.getHomeProduct("products?nametype=$type")
-
+        return apiInterface.getHomeProduct("CustomerAPI/products?type=\"$type\"")
     }
 
 }

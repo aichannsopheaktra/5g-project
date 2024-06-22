@@ -9,7 +9,7 @@
 
     <!-- First Product Card -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/newpro_card"
+        android:id="@+id/home_pro_card"
         android:layout_width="0dp"
         android:layout_height="120dp"
         android:layout_weight="1"
@@ -30,7 +30,7 @@
             android:layout_gravity="center_vertical">
 
             <ImageView
-                android:id="@+id/newproImg"
+                android:id="@+id/homeproImg"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
@@ -52,7 +52,7 @@
             android:layout_marginLeft="15dp">
 
             <TextView
-                android:id="@+id/newpro_name"
+                android:id="@+id/home_pro_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -66,7 +66,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/newpro_price"
+                android:id="@+id/home_pro_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -75,10 +75,8 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="normal"
-                app:layout_constraintEnd_toEndOf="@+id/newpro_name"
-                app:layout_constraintStart_toStartOf="@+id/newpro_name"
-                app:layout_constraintTop_toBottomOf="@+id/newpro_name"
-                />
+                app:layout_constraintStart_toStartOf="@+id/home_pro_name"
+                app:layout_constraintTop_toBottomOf="@+id/home_pro_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

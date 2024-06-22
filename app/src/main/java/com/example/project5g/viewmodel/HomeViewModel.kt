@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project5g.data.CartItem
 import com.example.project5g.data.Customer
+import com.example.project5g.data.HomeProduct
 import com.example.project5g.data.HomeRepository
 import com.example.project5g.data.LoginRequest
 import com.example.project5g.data.LoginResponse
@@ -34,6 +35,9 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     private val _purchaseData= MutableLiveData<List<Purchases>?>()
     val  purchaseData: LiveData<List<Purchases>?> get() = _purchaseData
+
+    private val _homeproductData = MutableLiveData<List<HomeProduct>?>()
+    val homeproductData: LiveData<List<HomeProduct>?> get()=_homeproductData
 
     fun fetchProduct() {
         homeRepository.getProduct().enqueue(object : Callback<List<Product>> {
@@ -145,11 +149,25 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     _purchaseData.value=null
                 }
             }
-
             override fun onFailure(call: Call<List<Purchases>>, t: Throwable) {
                 _purchaseData.value=null
                 System.out.println(t.message);
                 System.out.println("Fail");
+            }
+
+        })
+    }
+    fun fetchHomeProduct(type: String) {
+        homeRepository.getHomeProduct(type).enqueue(object: Callback<List<HomeProduct>> {
+            override fun onResponse(call: Call<List<HomeProduct>>,response: Response<List<HomeProduct>>
+            ) {
+                if(response.isSuccessful){
+                    _homeproductData.value= response.body();
+                    System.out.println("home_product:"+_homeproductData)
+                }
+            }
+            override fun onFailure(call: Call<List<HomeProduct>>, t: Throwable) {
+                System.out.println(t);
             }
 
         })

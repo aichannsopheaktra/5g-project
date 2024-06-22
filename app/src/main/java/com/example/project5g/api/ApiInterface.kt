@@ -16,6 +16,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface ApiInterface {
@@ -42,5 +44,7 @@ interface ApiInterface {
 
 //    testing
     @GET
-    fun getHomeProduct(@Url url: String): Call<Void>
+    fun getHomeProduct(@Url url: String): Call<List<HomeProduct>>
+//    @GET("CustomerAPI/{product}")
+//    fun getHomeProduct(@Path("product") pro : String?, @Query("type") t: String?): Call<List<HomeProduct>>
 }
