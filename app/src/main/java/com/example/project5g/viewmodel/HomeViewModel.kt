@@ -1,5 +1,6 @@
 package com.example.project5g.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,14 +20,17 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private val _productData = MutableLiveData<List<Product>>()
     val productData: LiveData<List<Product>> get() = _productData
 
-    private val _customerData = MutableLiveData<List<Customer>>()
-    val customerData: LiveData<List<Customer>> get() = _customerData
+    private val _customerData = MutableLiveData<Customer>()
+    val customerData: LiveData<Customer> get() = _customerData
 
     private val _loginResponse = MutableLiveData<LoginResponse?>()
     val loginResponse: LiveData<LoginResponse?> get() = _loginResponse
 
     private val _cartData = MutableLiveData<List<CartItem>?>()
     val cartData: LiveData<List<CartItem>?> get() = _cartData
+
+    private val _purchaseSuccess = MutableLiveData<Boolean>()
+    val purchaseSuccess: LiveData<Boolean> = _purchaseSuccess
 
     private val _purchaseData= MutableLiveData<List<Purchases>?>()
     val  purchaseData: LiveData<List<Purchases>?> get() = _purchaseData
@@ -48,22 +52,20 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     }
 
     fun fetchCustomer() {
-        homeRepository.getCustomer().enqueue(object : Callback<List<Customer>> {
-            override fun onResponse(call: Call<List<Customer>>, response: Response<List<Customer>>) {
+        homeRepository.getCustomer().enqueue(object : Callback<Customer> {
+            override fun onResponse(call: Call<Customer>, response: Response<Customer>) {
                 if (response.isSuccessful) {
                     _customerData.value = response.body()
                 } else {
-                    _customerData.value = emptyList() // Handle the case where the response is not successful
+
                 }
             }
 
-            override fun onFailure(call: Call<List<Customer>>, t: Throwable) {
-                _customerData.value = emptyList() // Handle failure
+            override fun onFailure(call: Call<Customer>, t: Throwable) {
+
             }
         })
     }
-
-
     fun loginUser(username: String, password: String) {
         val loginRequest = LoginRequest(username, password)
         homeRepository.loginUser(loginRequest).enqueue(object : Callback<LoginResponse> {
@@ -84,7 +86,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         homeRepository.getCart(object : Callback<List<CartItem>> {
             override fun onResponse(call: Call<List<CartItem>>, response: Response<List<CartItem>>) {
                 if (response.isSuccessful) {
-                    _cartData.value = response.body()
+                    val cartItems = response.body()
+                    _cartData.value = cartItems
                 } else {
                     _cartData.value = null
                 }
@@ -122,11 +125,12 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     fun purchase() {
         homeRepository.purchase().enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                // Handle response if needed
+                _purchaseSuccess.value = true
+                fetchCarts()
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
-                // Handle failure if needed
+                _purchaseSuccess.value = false
             }
         })
     }

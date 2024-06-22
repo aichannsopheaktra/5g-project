@@ -20,7 +20,7 @@ import retrofit2.http.Url
 
 interface ApiInterface {
     @GET("CustomerAPI")
-    fun getCustomer(): Call<List<Customer>>
+    fun getCustomer(@HeaderMap headers: Map<String, String>): Call<Customer>
 
     @GET("CustomerAPI/products?name=&categoryId")
     fun getProduct(): Call<List<Product>>
