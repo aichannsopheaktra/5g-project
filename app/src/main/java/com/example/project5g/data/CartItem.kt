@@ -6,7 +6,6 @@ data class CartItem(
     val productId: String,
     val product: Product,
     val qty: Int,
-    val price: Int,
-    val amount: Int
+    val price: Float,
+    val amount: Float 
 )
-
