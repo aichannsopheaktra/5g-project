@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project5g.R
@@ -62,6 +63,23 @@ class HistoryAdapter(
 //            val saleDescription = purchases.saleDescription;
             purchasesDate.text=purchases.date.toString();
             purchaseAmount.text="$"+purchases.total.toString();
+
+            itemView.findViewById<ImageButton>(R.id.btn_history_detail).setOnClickListener {
+//                product?.id?.let { productId ->
+//                    val currentQty = qtyTextView.text.toString().toInt()
+//                    viewModel.reduceCart(productId)
+//                    val newQty = currentQty - 1
+//                    if (newQty >= 1) {
+//                        qtyTextView.text = newQty.toString()
+//                        adapter.quantitiesMap[productId] = newQty
+//                        adapter.updateTotal()
+//                    } else {
+//                        adapter.removeItem(adapterPosition)
+//                    }
+//                }
+
+//                Toast.makeText(this,purchases.id.toString(),Toast.LENGTH_LONG);
+            }
         }
     }
 

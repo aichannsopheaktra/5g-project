@@ -54,8 +54,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        initAdpater();
-//        initViewModel();
         viewModel.fetchPurchase();
         initViewModel();
 
@@ -63,13 +61,12 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     }
     private fun initViewModel(){
         viewModel.purchaseData.observe(viewLifecycleOwner, Observer { purchaseItem->
-            recyclerView.visibility =View.VISIBLE
+            recyclerView.visibility = View.VISIBLE
             System.out.println("sss :"+purchaseItem)
 
             adapter.setPurchase(purchaseItem as ArrayList<Purchases>)
             progressBar.visibility = View.GONE;
         })
-//
     }
 
 }

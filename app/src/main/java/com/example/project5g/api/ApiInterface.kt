@@ -2,11 +2,13 @@ package com.example.project5g.api
 
 import com.example.project5g.data.CartItem
 import com.example.project5g.data.Customer
+import com.example.project5g.data.HomeProduct
 import com.example.project5g.data.LoginRequest
 import com.example.project5g.data.LoginResponse
 import com.example.project5g.data.Product
 import com.example.project5g.data.Purchases
 import okhttp3.ResponseBody
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.http.Body
@@ -32,10 +34,13 @@ interface ApiInterface {
     @GET
     fun cart(@Url url: String, @HeaderMap headers: Map<String, String>): Call<Void>
 
-    @GET("CustomerAPI/purchases")
-    fun getPurchases(@HeaderMap headers: Map<String, String>): Call<List<Purchases>>
-    
     @POST("CustomerAPI/purchase")
     fun purchase(@HeaderMap headers: Map<String, String>): Call<Void>
+    
+    @GET("CustomerAPI/purchases")
+    fun getPurchases(@HeaderMap headers: Map<String, String>): Call<List<Purchases>>
 
+//    testing
+    @GET
+    fun getHomeProduct(@Url url: String): Call<Void>
 }

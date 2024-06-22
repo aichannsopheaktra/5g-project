@@ -8,7 +8,7 @@
     tools:context=".ui.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCart"
+        android:id="@+id/recyclerViewHomePro"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
@@ -18,7 +18,7 @@
 
 
     <ProgressBar
-        android:id="@+id/progress"
+        android:id="@+id/progressHomePro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"

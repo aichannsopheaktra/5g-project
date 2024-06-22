@@ -70,15 +70,26 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         return apiInterface.cart("CustomerAPI/reduce-cart?ProductId=$productId", headers)
     }
 
-    fun getPurchases(callback: Callback<List<Purchases>>){
-        val headers=HashMap<String,String>()
-        headers["Authorization"] = "Bearer $token"
-        apiInterface.getPurchases(headers).enqueue(callback)
-    }
     fun purchase(): Call<Void> {
         checkTokenValidity()
         val headers = HashMap<String, String>()
         headers["Authorization"] = "Bearer $token"
         return apiInterface.purchase(headers)
     }
+    
+    fun getPurchases(callback: Callback<List<Purchases>>){
+        checkTokenValidity()
+        val headers=HashMap<String,String>()
+        headers["Authorization"] = "Bearer $token"
+        apiInterface.getPurchases(headers).enqueue(callback)
+    }
+
+    fun getHomeProduct(type: String): Call<Void> {
+        checkTokenValidity()
+        val headers = HashMap<String, String>()
+        headers["Authorization"] = "Bearer $token"
+        return apiInterface.getHomeProduct("products?nametype=$type")
+
+    }
+
 }
