@@ -1,0 +1,31 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background with solid white color -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white"></solid>
+        </shape>
+    </item>
+    <!-- Gradient with shadow effect -->
+    <item
+        android:top="10dp"
+        android:bottom="10dp"
+        android:left="10dp"
+        android:right="10dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#EB3944"
+                android:endColor="#F67723"
+                android:angle="0"
+                android:type="radial"
+                android:gradientRadius="20dp"
+                android:centerX="0.5"
+                android:centerY="0.5"
+                android:useLevel="false" />
+            <corners
+                android:topLeftRadius="10dp"
+                android:topRightRadius="10dp"
+                android:bottomLeftRadius="10dp"
+                android:bottomRightRadius="10dp" />
+        </shape>
+    </item>
+</layer-list>

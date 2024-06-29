@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
+
+    <!-- Background with shadow effect -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/card_background"
+        android:padding="10dp">
+
+
+
+        <!-- CardView with register form -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/registerCard"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="10dp"
+            android:background="@drawable/shawdow_background">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Header with rounded corners on top left and right -->
+                <TextView
+                    android:id="@+id/registerLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/header_background"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="Account Verification"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/inriasans_bold" />
+
+                <LinearLayout
+                    android:id="@+id/registerFormLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/registerLabel"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+
+                    android:layout_marginTop="16dp">
+
+                    <!-- Username EditText -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/usernameLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Account Verification Send : Chea@gmail.com"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/inriasans_bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="4dp"/>
+
+                        <EditText
+                            android:id="@+id/editTextUsername"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/usernameLabel"
+                            android:fontFamily="@font/inriasans_regular"
+                            android:hint="Enter Code"
+                            android:inputType="text"
+                            android:theme="@style/EditTextOrangeUnderline" />
+
+                        <ImageView
+                            android:id="@+id/UserIcon"
+                            android:layout_width="55dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="-6dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="8dp"
+                            android:src="@drawable/user" />
+                    </RelativeLayout>
+
+                    <!-- OTP EditText and OTP Verification Layout -->
+                    <RelativeLayout
+                        android:id="@+id/otpLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/otpLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Enter OTP"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="4dp"/>
+
+                        <EditText
+                            android:id="@+id/editTextOTP"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/otpLabel"
+                            android:fontFamily="@font/inriasans_regular"
+                            android:hint="Enter OTP"
+                            android:inputType="number"
+                            android:paddingEnd="48dp"
+                            android:theme="@style/EditTextOrangeUnderline" />
+
+                        <TextView
+                            android:id="@+id/resendOTPText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/editTextOTP"
+                            android:layout_marginTop="8dp"
+                            android:text="Resend OTP"
+                            android:textColor="?attr/colorPrimary"
+                            android:fontFamily="@font/inriasans_regular"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingEnd="16dp"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/otpTimerLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/resendOTPText"
+                            android:layout_marginTop="8dp"
+                            android:text="Time remaining:"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/inriasans_regular"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/otpTimer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@id/otpTimerLabel"
+                            android:layout_toRightOf="@id/otpTimerLabel"
+                            android:layout_marginStart="8dp"
+                            android:text="00:00"
+                            android:textColor="?attr/colorPrimary"
+                            android:fontFamily="@font/inriasans_regular"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+
+                    <!-- Register Button -->
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Time Left 1:00" />
+
+                    <Button
+                        android:id="@+id/forgotPasswordTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_marginTop="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/inriasans_regular"
+                        android:paddingEnd="16dp"
+                        android:text="Send Again"
+                        android:textColor="#F47622"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"/>
+
+                    <Button
+                        android:id="@+id/buttonRegister"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/button_background"
+                        android:text="Submit"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/inriasans_bold" />
+                </LinearLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>
