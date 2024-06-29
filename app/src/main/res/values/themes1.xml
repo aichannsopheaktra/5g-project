@@ -1,0 +1,15 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#DE5B00</item>
+        <item name="colorPrimaryDark">#DE5B00</item>
+        <item name="colorAccent">#DE5B00</item>
+    </style>
+
+    <!-- Custom style for EditText underline color -->
+    <style name="EditTextOrangeUnderline" parent="Widget.AppCompat.EditText">
+        <item name="colorControlActivated">#DE5B00</item>
+        <item name="colorControlNormal">#DE5B00</item>
+        <item name="colorControlHighlight">#DE5B00</item>
+    </style>
+</resources>
