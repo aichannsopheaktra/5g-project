@@ -1,4 +1,4 @@
-package com.example.project5g.ui
+package com.example.project5g
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,6 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.project5g.R
 import com.example.project5g.api.ApiClient
 import com.example.project5g.api.ApiInterface
 import com.example.project5g.data.HomeRepository

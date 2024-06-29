@@ -1,11 +1,11 @@
 package com.example.project5g.data
 
 data class SaleDescription (
-    var id: String?,
-    var saleId:String?,
-    var productId:String?,
-    var price:Double?,
-    var qty: Int?,
-    var amount: Double?,
-    var product: String?
+    val id: String?,
+    val saleId:String?,
+    val price:Double?,
+    val qty: Int?,
+    val productId:String?,
+    val amount: Double?,
+    val product: String?
 )

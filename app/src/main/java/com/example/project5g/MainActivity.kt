@@ -1,4 +1,4 @@
-package com.example.project5g.ui
+package com.example.project5g
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,11 @@ import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.project5g.R
+import com.example.project5g.ui.AccountFragment
+import com.example.project5g.ui.CartFragment
+import com.example.project5g.ui.HistoryFragment
+import com.example.project5g.ui.HomeFragment
+import com.example.project5g.ui.ProductFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

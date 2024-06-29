@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project5g.data.CartItem
+import com.example.project5g.data.Categories
 import com.example.project5g.data.Customer
 import com.example.project5g.data.HomeProduct
 import com.example.project5g.data.HomeRepository
@@ -20,6 +21,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     private val _productData = MutableLiveData<List<Product>>()
     val productData: LiveData<List<Product>> get() = _productData
+    private val _categoriesData = MutableLiveData<List<Categories>>()
+    val categoriesData: LiveData<List<Categories>> get() = _categoriesData
 
     private val _customerData = MutableLiveData<Customer>()
     val customerData: LiveData<Customer> get() = _customerData
@@ -51,6 +54,21 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
             override fun onFailure(call: Call<List<Product>>, t: Throwable) {
                 _productData.value = emptyList()
+            }
+        })
+    }
+    fun fetchCategories() {
+        homeRepository.getCategories().enqueue(object : Callback<List<Categories>> {
+            override fun onResponse(call: Call<List<Categories>>, response: Response<List<Categories>>) {
+                if (response.isSuccessful) {
+                    _categoriesData.value = response.body()
+                } else {
+                    _categoriesData.value = emptyList()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Categories>>, t: Throwable) {
+                _categoriesData.value = emptyList()
             }
         })
     }

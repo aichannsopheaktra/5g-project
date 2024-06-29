@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.project5g.api.ApiInterface
-import com.example.project5g.ui.LoginActivity
+import com.example.project5g.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import java.util.Calendar
@@ -45,6 +45,11 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
     fun getProduct(): Call<List<Product>> {
         checkTokenValidity()
         return apiInterface.getProduct()
+    }
+
+    fun getCategories(): Call<List<Categories>> {
+        checkTokenValidity()
+        return apiInterface.getCategories()
     }
 
     fun loginUser(loginRequest: LoginRequest): Call<LoginResponse> {

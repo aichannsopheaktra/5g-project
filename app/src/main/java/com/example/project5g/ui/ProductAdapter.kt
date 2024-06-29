@@ -1,7 +1,5 @@
 package com.example.project5g.ui
 
-import android.app.AlertDialog
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.example.project5g.R
 import com.example.project5g.data.Product
 import com.example.project5g.viewmodel.HomeViewModel
+import com.example.project5g.ui.dialog.product.DetailDialog
+
 
 class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     private var prodata: ArrayList<Product>? = null
@@ -28,6 +28,7 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product_card, parent, false)
         return ProductViewHolder(view, viewModel)
     }
+
     override fun getItemCount(): Int {
         return if (filteredProData == null) 0 else Math.ceil((filteredProData!!.size / 2.0)).toInt()
     }
@@ -51,7 +52,6 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
         notifyDataSetChanged()
     }
 
-
     class ProductViewHolder(itemView: View, private val viewModel: HomeViewModel) : RecyclerView.ViewHolder(itemView) {
         private val pName1: TextView = itemView.findViewById(R.id.item_name1)
         private val pPrice1: TextView = itemView.findViewById(R.id.item_price1)
@@ -67,15 +67,17 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
                 pName1.text = item.name
                 pPrice1.text = "$" + item.price.toString()
                 val imageUrl = "https://5g.csproject.org/images/${item.imageURL}"
-                // Load image using Glide or another image loading library
                 Glide.with(itemView)
                     .load(imageUrl)
                     .into(imageView1)
                 itemView.findViewById<Button>(R.id.addButton1).setOnClickListener {
                     item.id?.let { productId ->
                         viewModel.addToCart(productId)
-                        showSuccessDialog()
+                        DetailDialog(itemView.context, item, viewModel).showSuccessDialog()
                     }
+                }
+                imageView1.setOnClickListener {
+                    DetailDialog(itemView.context, item, viewModel).show()
                 }
             }
         }
@@ -85,30 +87,20 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
                 pName2.text = item.name
                 pPrice2.text = "$" + item.price.toString()
                 val imageUrl = "https://5g.csproject.org/images/${item.imageURL}"
-                // Load image using Glide or another image loading library
                 Glide.with(itemView)
                     .load(imageUrl)
                     .into(imageView2)
                 itemView.findViewById<Button>(R.id.addButton2).setOnClickListener {
                     item.id?.let { productId ->
                         viewModel.addToCart(productId)
-                        showSuccessDialog()
+                        DetailDialog(itemView.context, item, viewModel).showSuccessDialog()
                     }
+                }
+                imageView2.setOnClickListener {
+                    DetailDialog(itemView.context, item, viewModel).show()
                 }
                 cardView2.visibility = View.VISIBLE
             }
-        }
-        private fun showSuccessDialog() {
-            val builder = AlertDialog.Builder(itemView.context)
-            builder.setTitle("Success")
-                .setMessage("Item added to cart successfully!")
-            val dialog = builder.create()
-            dialog.show()
-            // Delay the dismissal of the dialog
-            val handler = Handler()
-            handler.postDelayed({
-                dialog.dismiss()
-            }, 1000) // 1000 milliseconds = 1 second
         }
         fun hideView2() {
             cardView2.visibility = View.INVISIBLE

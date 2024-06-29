@@ -1,19 +1,20 @@
 package com.example.project5g.data
 
 data class HomeProduct(
-    var id: String? = null,
-    var categoryId: String? = null,
-    var supplierId: String? = null,
-    var barcode: String? = null,
-    var name: String? = null,
-    var price: Int? = null,
-    var stock: Int? = null,
-    var ws_price: Int? = null,
-    var ws: Int? = null,
-    var image: String? = null,
-    var imageURL: String? = null,
-    var createDate: String?=null,
-    var discount: Int? =null,
-    var category: String? = null,
-    var supplier: String? = null
+    val id: String? = null,
+    val categoryId: String? = null,
+    val supplierId: String? = null,
+    val barcode: String? = null,
+    val name: String? = null,
+    val price: Int? = null,
+    val stock: Int? = null,
+    val ws_price: Int? = null,
+    val ws: Int? = null,
+    val image: String? = null,
+    val imageURL: String? = null,
+    val createDate: String? = null,
+    val discount: Int? = null,
+    val category: String? = null,
+    val supplier: String? = null
 )
+
