@@ -25,13 +25,15 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
     private lateinit var progressBar: ProgressBar
     private lateinit var searchView: SearchView
     private lateinit var rootView: View // Root view of the fragment layout
+    //******* form this
     private val factory: HomeViewModelFactory by lazy {
         val apiInterface = ApiClient.instance.create(ApiInterface::class.java)
         val repository = HomeRepository(apiInterface, requireContext())
         HomeViewModelFactory(repository)
     }
-
     private val viewModel: HomeViewModel by viewModels { factory }
+//****** to this (put in fragment)
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -2,10 +2,13 @@ package com.example.project5g.api
 
 import com.example.project5g.data.CartItem
 import com.example.project5g.data.Customer
+import com.example.project5g.data.HomeProduct
 import com.example.project5g.data.LoginRequest
 import com.example.project5g.data.LoginResponse
 import com.example.project5g.data.Product
+import com.example.project5g.data.Purchases
 import okhttp3.ResponseBody
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.http.Body
@@ -13,11 +16,13 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface ApiInterface {
     @GET("CustomerAPI")
-    fun getCustomer(): Call<List<Customer>>
+    fun getCustomer(@HeaderMap headers: Map<String, String>): Call<Customer>
 
     @GET("CustomerAPI/products?name=&categoryId")
     fun getProduct(): Call<List<Product>>
@@ -33,5 +38,13 @@ interface ApiInterface {
 
     @POST("CustomerAPI/purchase")
     fun purchase(@HeaderMap headers: Map<String, String>): Call<Void>
+    
+    @GET("CustomerAPI/purchases")
+    fun getPurchases(@HeaderMap headers: Map<String, String>): Call<List<Purchases>>
 
+//    testing
+    @GET
+    fun getHomeProduct(@Url url: String): Call<List<HomeProduct>>
+//    @GET("CustomerAPI/{product}")
+//    fun getHomeProduct(@Path("product") pro : String?, @Query("type") t: String?): Call<List<HomeProduct>>
 }

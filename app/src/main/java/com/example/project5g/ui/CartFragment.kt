@@ -2,13 +2,15 @@ package com.example.project5g.ui
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.service.controls.ControlsProviderService.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -17,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project5g.R
 import com.example.project5g.api.ApiClient
 import com.example.project5g.api.ApiInterface
-import com.example.project5g.data.CartItem
 import com.example.project5g.data.HomeRepository
 import com.example.project5g.viewmodel.HomeViewModel
 import com.example.project5g.viewmodel.HomeViewModelFactory
@@ -28,6 +29,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: CartAdapter
     private lateinit var totalTextView: TextView
+
 
     private val factory: HomeViewModelFactory by lazy {
         val apiInterface = ApiClient.instance.create(ApiInterface::class.java)
@@ -52,6 +54,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         initAdapter()
         return view
     }
+
     private fun showConfirmationDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Confirm Payment")
@@ -65,7 +68,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             }
             .show()
     }
-
     private fun initAdapter() {
         adapter = CartAdapter(
             ArrayList(),
@@ -80,12 +82,32 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         viewModel.fetchCarts()
+        // Observe purchase success
+        viewModel.purchaseSuccess.observe(viewLifecycleOwner, Observer { success ->
+            if (success) {
+                // Reload fragment if purchase was successful
+                reloadFragment()
+            } else {
+                // Handle purchase failure if needed
+                // Example: show error message to user
+                Toast.makeText(requireContext(), "Purchase failed", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun reloadFragment() {
+        val ft = parentFragmentManager.beginTransaction()
+        ft.detach(this).attach(this).commit()
     }
 
     private fun initViewModel() {
         viewModel.cartData.observe(viewLifecycleOwner, Observer { cartItems ->
             recyclerView.visibility = View.VISIBLE
-            adapter.setCartItems(cartItems as ArrayList<CartItem>)
+            if (cartItems != null) {
+                adapter.setCartItems(ArrayList(cartItems))
+            } else {
+                adapter.setCartItems(ArrayList()) // Handle null case appropriately
+            }
             progressBar.visibility = View.GONE
         })
     }

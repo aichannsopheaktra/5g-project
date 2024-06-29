@@ -35,9 +35,11 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         }
     }
 
-    fun getCustomer(): Call<List<Customer>> {
+    fun getCustomer(): Call<Customer> {
         checkTokenValidity()
-        return apiInterface.getCustomer()
+        val headers = HashMap<String, String>()
+        headers["Authorization"] = "Bearer $token" // Add the token to the Authorization header
+        return apiInterface.getCustomer(headers)
     }
 
     fun getProduct(): Call<List<Product>> {
@@ -52,7 +54,7 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
     fun getCart(callback: Callback<List<CartItem>>) {
         checkTokenValidity()
         val headers = HashMap<String, String>()
-        headers["Authorization"] = "Bearer $token" // Add the token to the Authorization header
+        headers["Authorization"] = "Bearer $token"
         apiInterface.getCart(headers).enqueue(callback)
     }
 
@@ -76,4 +78,18 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         headers["Authorization"] = "Bearer $token"
         return apiInterface.purchase(headers)
     }
+    
+    fun getPurchases(callback: Callback<List<Purchases>>){
+        checkTokenValidity()
+        val headers=HashMap<String,String>()
+        headers["Authorization"] = "Bearer $token"
+        apiInterface.getPurchases(headers).enqueue(callback)
+    }
+
+    fun getHomeProduct(type: String): Call<List<HomeProduct>> {
+        checkTokenValidity()
+        val headers = HashMap<String, String>()
+        return apiInterface.getHomeProduct("CustomerAPI/products?type=\"$type\"")
+    }
+
 }
