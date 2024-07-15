@@ -42,9 +42,14 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         return apiInterface.getCustomer(headers)
     }
 
+    fun updateCustomer(customer: Customer): Call<Customer> {
+        checkTokenValidity()
+        return apiInterface.updateCustomer(customer.id, customer)
+    }
+
     fun getProduct(): Call<List<Product>> {
         checkTokenValidity()
-        return apiInterface.getProduct()
+        return apiInterface.getProducts()
     }
 
     fun getCategories(): Call<List<Categories>> {

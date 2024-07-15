@@ -9,18 +9,21 @@
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
         android:hint="Name"/>
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
         android:hint="Email"/>
 
     <EditText
         android:id="@+id/editTextPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
         android:hint="Phone"/>
 
     <DatePicker
@@ -30,9 +33,32 @@
         android:calendarViewShown="false"
         android:datePickerMode="spinner"/>
 
-    <Button
-        android:id="@+id/buttonSave"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonExit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="@drawable/button_background"
+            android:textColor="@android:color/white"
+            android:text="Exit"/>
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="@drawable/button_background"
+            android:textColor="@android:color/white"
+            android:text="Save"/>
+
+    </LinearLayout>
+
 </LinearLayout>
+

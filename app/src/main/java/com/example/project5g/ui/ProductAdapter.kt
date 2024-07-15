@@ -13,19 +13,61 @@ import com.example.project5g.data.Product
 import com.example.project5g.viewmodel.HomeViewModel
 import com.example.project5g.ui.dialog.product.DetailDialog
 
-
-class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(private val viewModel: HomeViewModel) :
+    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     private var prodata: ArrayList<Product>? = null
+    private var originalProData: ArrayList<Product>? = null
     private var filteredProData: ArrayList<Product>? = null
+    private var currentQuery: String = ""
+    private var currentCategoryId: String? = null
+
+    fun filterByCategory(categoryId: String) {
+        currentCategoryId = categoryId
+        applyFilters()
+    }
+
+    fun filter(query: String) {
+        currentQuery = query
+        applyFilters()
+    }
 
     fun setProData(list: ArrayList<Product>?) {
         prodata = list
-        filteredProData = list
+        originalProData = ArrayList(list ?: emptyList())
+        applyFilters()
+    }
+
+    fun resetCategoryFilter() {
+        currentCategoryId = null
+        applyFilters()
+    }
+
+    private fun applyFilters() {
+        filteredProData = originalProData?.let { products ->
+            var filteredList = products.toMutableList()
+
+            currentCategoryId?.let { categoryId ->
+                filteredList = filteredList.filter { product ->
+                    product.categoryId?.contains(categoryId, ignoreCase = true) ?: false
+                }.toMutableList()
+            }
+
+            if (currentQuery.isNotBlank()) {
+                filteredList = filteredList.filter { product ->
+                    product.name?.contains(currentQuery, ignoreCase = true) ?: false
+                }.toMutableList()
+            }
+
+            ArrayList<Product>(filteredList) // Explicit conversion to Kotlin ArrayList
+        } ?: ArrayList()
+
         notifyDataSetChanged()
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product_card, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_product_card, parent, false)
         return ProductViewHolder(view, viewModel)
     }
 
@@ -38,24 +80,19 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
         val index2 = index1 + 1
 
         holder.bindView1(filteredProData?.getOrNull(index1))
-        if (index2 < filteredProData!!.size) {
-            holder.bindView2(filteredProData?.getOrNull(index2))
-        } else {
-            holder.hideView2()
-        }
+        holder.bindView2(filteredProData?.getOrNull(index2))
     }
 
-    fun filter(query: String) {
-        filteredProData = prodata?.filter { product ->
-            product.name?.contains(query, ignoreCase = true) ?: false
-        } as ArrayList<Product>?
-        notifyDataSetChanged()
-    }
-
-    class ProductViewHolder(itemView: View, private val viewModel: HomeViewModel) : RecyclerView.ViewHolder(itemView) {
+    class ProductViewHolder(
+        itemView: View,
+        private val viewModel: HomeViewModel
+    ) : RecyclerView.ViewHolder(itemView) {
         private val pName1: TextView = itemView.findViewById(R.id.item_name1)
         private val pPrice1: TextView = itemView.findViewById(R.id.item_price1)
         private val imageView1: ImageView = itemView.findViewById(R.id.imageView1)
+        private val cardView1: View = itemView.findViewById(R.id.cardView1)
+
+
 
         private val pName2: TextView = itemView.findViewById(R.id.item_name2)
         private val pPrice2: TextView = itemView.findViewById(R.id.item_price2)
@@ -70,15 +107,12 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
                 Glide.with(itemView)
                     .load(imageUrl)
                     .into(imageView1)
-                itemView.findViewById<Button>(R.id.addButton1).setOnClickListener {
-                    item.id?.let { productId ->
-                        viewModel.addToCart(productId)
-                        DetailDialog(itemView.context, item, viewModel).showSuccessDialog()
-                    }
-                }
-                imageView1.setOnClickListener {
+                cardView1.setOnClickListener {
                     DetailDialog(itemView.context, item, viewModel).show()
                 }
+                itemView.visibility = View.VISIBLE
+            } else {
+                itemView.visibility = View.GONE
             }
         }
 
@@ -90,20 +124,13 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
                 Glide.with(itemView)
                     .load(imageUrl)
                     .into(imageView2)
-                itemView.findViewById<Button>(R.id.addButton2).setOnClickListener {
-                    item.id?.let { productId ->
-                        viewModel.addToCart(productId)
-                        DetailDialog(itemView.context, item, viewModel).showSuccessDialog()
-                    }
-                }
-                imageView2.setOnClickListener {
+                cardView2.setOnClickListener {
                     DetailDialog(itemView.context, item, viewModel).show()
                 }
                 cardView2.visibility = View.VISIBLE
+            } else {
+                cardView2.visibility = View.INVISIBLE
             }
-        }
-        fun hideView2() {
-            cardView2.visibility = View.INVISIBLE
         }
     }
 }

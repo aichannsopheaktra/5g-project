@@ -57,7 +57,6 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         checkBalanceCard = view.findViewById(R.id.checkBalanceCard)
         changePasswordCard = view.findViewById(R.id.changePasswordCard)
 
-
         logoutButton.setOnClickListener {
             // Clear the authentication token from SharedPreferences
             val sharedPreferences =
@@ -68,19 +67,26 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish() // Finish the current activity to prevent going back to it
         }
+
         detailButton.setOnClickListener {
             viewModel.customerData.value?.let { customer ->
-                DetailDialog(requireContext(), customer).show()
+                DetailDialog(requireContext(), customer) { updatedCustomer ->
+                    viewModel.updateCustomer(updatedCustomer)
+                }.show()
             }
         }
+
         checkBalanceCard.setOnClickListener {
             viewModel.customerData.value?.let { customer ->
                 BalanceDialog(requireContext(), customer).show()
             }
         }
+
         changePasswordCard.setOnClickListener {
             viewModel.customerData.value?.let { customer ->
-                ChangePassDialog(requireContext(), customer).show()
+                ChangePassDialog(requireContext(), customer) { updatedCustomer ->
+                    viewModel.updateCustomer(updatedCustomer)
+                }.show()
             }
         }
 
@@ -94,14 +100,15 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
     private fun initViewModel() {
         viewModel.customerData.observe(viewLifecycleOwner, Observer { customer ->
+            progressBar.visibility = View.GONE
             if (customer != null) {
                 displayCustomerData(customer)
             } else {
-//                displayDefaultCustomerData()
+                // Handle null customer case if necessary
             }
-            progressBar.visibility = View.GONE
         })
 
+        progressBar.visibility = View.VISIBLE // Show progress bar before API call
         viewModel.fetchCustomer()
     }
 
@@ -109,10 +116,4 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         customerName.text = customer.name
         customerEmail.text = customer.email
     }
-
-//    private fun displayDefaultCustomerData() {
-//        customerName.text = getString(R.string.default_customer_name)
-//        customerEmail.text = getString(R.string.default_customer_email)
-//    }
-
 }

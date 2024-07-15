@@ -53,7 +53,7 @@ class CartAdapter(
                 totalPrice += price * qty
             }
         }
-        totalTextView.text = "$$totalPrice"
+        totalTextView.text = "TOTAL : $$totalPrice"
     }
 
     fun removeItem(position: Int) {

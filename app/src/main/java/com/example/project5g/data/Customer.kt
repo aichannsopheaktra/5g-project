@@ -6,11 +6,12 @@ data class Customer(
     val name: String,
     val dob: String,
     val phone: String,
-    val balance: Int,
-    val sales: Any,
-    val customerType: Any,
-    val email: String,
-    val username: String,
-    val password: String,
-    val carts: Any
+    val balance: Double,
+    val sales: Any? = null,
+    val customerType: Any? = null,
+    val email: String? = null,
+    val username: String? = null,
+    var password: String,
+    val carts: CartItem? = null
 )
+

@@ -6,10 +6,16 @@ import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
+import com.example.project5g.MainActivity
 import com.example.project5g.R
 import com.example.project5g.data.Customer
+import com.example.project5g.ui.AccountFragment
 
-class DetailDialog(private val context: Context, private val customer: Customer) {
+class DetailDialog(
+    private val context: Context,
+    private val customer: Customer,
+    private val onCustomerUpdated: (Customer) -> Unit
+) {
 
     fun show() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_account_detail, null)
@@ -18,21 +24,20 @@ class DetailDialog(private val context: Context, private val customer: Customer)
         val editTextPhone = dialogView.findViewById<EditText>(R.id.editTextPhone)
         val datePickerDOB = dialogView.findViewById<DatePicker>(R.id.datePickerDOB)
         val buttonSave = dialogView.findViewById<Button>(R.id.buttonSave)
+        val buttonExit = dialogView.findViewById<Button>(R.id.buttonExit) // Add exit button
 
         // Set current data to EditText fields
         editTextName.setText(customer.name)
         editTextEmail.setText(customer.email)
         editTextPhone.setText(customer.phone)
 
+        // Set DOB in the DatePicker if available
         customer.dob?.let { dob ->
-            // Parse DOB string into year, month, and day components
             val dobParts = dob.split("-")
             if (dobParts.size == 3) {
                 val year = dobParts[0].toInt()
-                val month = dobParts[1].toInt() - 1 // Month in DatePicker is zero-based
+                val month = dobParts[1].toInt() - 1 // Month is zero-based
                 val day = dobParts[2].toInt()
-
-                // Set DOB in the DatePicker
                 datePickerDOB.init(year, month, day, null)
             }
         }
@@ -47,22 +52,30 @@ class DetailDialog(private val context: Context, private val customer: Customer)
             val email = editTextEmail.text.toString()
             val phone = editTextPhone.text.toString()
 
-            // Extracting the selected date from DatePicker
             val dobYear = datePickerDOB.year
-            val dobMonth = datePickerDOB.month + 1 // adding 1 because DatePicker months are 0-based
-            val dobDay = datePickerDOB.dayOfMonth
-            val dob = "$dobDay/$dobMonth/$dobYear"
+            val dobMonth = String.format("%02d", datePickerDOB.month + 1) // Ensure two digits with leading zero
+            val dobDay = String.format("%02d", datePickerDOB.dayOfMonth) // Ensure two digits with leading zero
+            val dob = "$dobYear-$dobMonth-$dobDay"
 
-            // Update displayed customer data
-            // customerName.text = name  // You can't directly update the UI from here.
-            // customerEmail.text = email  // You can't directly update the UI from here.
+            // Update customer data
+            val updatedCustomer = customer.copy(name = name, email = email, phone = phone, dob = dob)
 
-            // Here you would ideally use a callback to update the customer data in the Fragment
+            // Trigger the callback with updated customer data
+            onCustomerUpdated(updatedCustomer)
+
+            // Call replaceFragment from MainActivity
+            if (context is MainActivity) {
+                context.replaceFragment(AccountFragment::class.java)
+            }
 
             // Dismiss the dialog
             dialog.dismiss()
         }
 
+        buttonExit.setOnClickListener {
+            // Simply dismiss the dialog
+            dialog.dismiss()
+        }
         dialog.show()
     }
 }

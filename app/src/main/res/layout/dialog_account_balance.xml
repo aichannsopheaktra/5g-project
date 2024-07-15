@@ -31,12 +31,15 @@
         android:id="@+id/customerBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Balance" />
+        android:text="$ 00.0" />
     </LinearLayout>
     <Button
         android:id="@+id/buttonExit"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@drawable/button_background"
+        android:textColor="@android:color/white"
         android:text="Exit"/>
 </LinearLayout>
 

@@ -21,6 +21,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     private val _productData = MutableLiveData<List<Product>>()
     val productData: LiveData<List<Product>> get() = _productData
+
     private val _categoriesData = MutableLiveData<List<Categories>>()
     val categoriesData: LiveData<List<Categories>> get() = _categoriesData
 
@@ -72,24 +73,45 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             }
         })
     }
-
     fun fetchCustomer() {
         homeRepository.getCustomer().enqueue(object : Callback<Customer> {
             override fun onResponse(call: Call<Customer>, response: Response<Customer>) {
                 if (response.isSuccessful) {
                     _customerData.value = response.body()
                 } else {
-
+                    // Handle unsuccessful response, optionally set _customerData.value = null
                 }
             }
 
             override fun onFailure(call: Call<Customer>, t: Throwable) {
-
+                // Handle failure, optionally set _customerData.value = null
             }
         })
     }
-    fun loginUser(username: String, password: String) {
-        val loginRequest = LoginRequest(username, password)
+
+    fun updateCustomer(customer: Customer) {
+        homeRepository.updateCustomer(customer).enqueue(object : Callback<Customer> {
+            override fun onResponse(call: Call<Customer>, response: Response<Customer>) {
+                if (response.isSuccessful) {
+                    _customerData.value = response.body()
+                } else {
+                    // Handle unsuccessful response, optionally set _customerData.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<Customer>, t: Throwable) {
+                // Handle failure, optionally set _customerData.value = null
+            }
+        })
+    }
+
+    fun loginUser(identifier: String, password: String) {
+        val loginRequest = when {
+            identifier.contains("@") -> LoginRequest(email = identifier, password = password)
+            identifier.all { it.isDigit() } -> LoginRequest(phone = identifier, password = password)
+            else -> LoginRequest(username = identifier, password = password)
+        }
+
         homeRepository.loginUser(loginRequest).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {

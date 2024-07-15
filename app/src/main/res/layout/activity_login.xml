@@ -26,7 +26,7 @@
                     android:id="@+id/loginLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/header_background"
+                    android:background="@drawable/gradient_color"
                     android:gravity="center"
                     android:padding="16dp"
                     android:text="Login"
@@ -47,15 +47,13 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="48dp">
-
                         <EditText
-                            android:id="@+id/usernameEditText"
+                            android:id="@+id/identifierEditText"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:fontFamily="@font/inriasans_regular"
-                            android:hint="Username"
-                            android:inputType="text"
-                            android:theme="@style/EditTextOrangeUnderline" />
+                            android:hint="Name, Phone or Email"
+                            android:inputType="text"/>
 
                         <ImageView
                             android:id="@+id/UserIcon"
@@ -80,7 +78,6 @@
                             android:hint="Password"
                             android:inputType="textPassword"
                             android:paddingEnd="48dp"
-                            android:theme="@style/EditTextOrangeUnderline"
                             android:fontFamily="@font/inriasans_regular" />
 
                         <ImageView
@@ -94,16 +91,6 @@
                             android:padding="8dp"
                             android:src="@drawable/eye" />
                     </RelativeLayout>
-
-                    <!-- Remember Me CheckBox -->
-                    <CheckBox
-                        android:id="@+id/rememberMeCheckBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Remember Me"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/inriasans_regular" />
-
                     <!-- Login Button -->
                     <Button
                         android:id="@+id/loginButton"
