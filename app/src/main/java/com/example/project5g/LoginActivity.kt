@@ -2,9 +2,9 @@ package com.example.project5g
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +18,7 @@ import java.util.*
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var homeViewModel: HomeViewModel
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,19 +32,57 @@ class LoginActivity : AppCompatActivity() {
 
         val loginButton = findViewById<Button>(R.id.loginButton)
         loginButton.setOnClickListener {
-            val username = findViewById<EditText>(R.id.usernameEditText).text.toString()
+            val identifier = findViewById<EditText>(R.id.identifierEditText).text.toString()
             val password = findViewById<EditText>(R.id.passwordEditText).text.toString()
 
-            homeViewModel.loginUser(username, password)
+            // Check if fields are empty
+            if (identifier.isEmpty() || password.isEmpty()) {
+                // Show toast message for empty fields
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Proceed with login attempt
+            homeViewModel.loginUser(identifier, password)
 
             homeViewModel.loginResponse.observe(this, Observer { loginResponse ->
                 if (loginResponse != null) {
+                    // Login successful
                     saveAuthToken(loginResponse.token)
                     navigateToMainActivity()
+
+                    // Show success message
+                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
                 } else {
+                    // Login failed
                     Log.e("LoginActivity", "Login failed")
+
+                    // Show error message
+                    Toast.makeText(this, "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show()
                 }
             })
+        }
+
+        val forgotPasswordTextView = findViewById<TextView>(R.id.forgotPasswordTextView)
+        forgotPasswordTextView.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+        }
+
+        val registerTextView = findViewById<TextView>(R.id.registerTextView)
+        registerTextView.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
+        val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
+        val eyeIcon = findViewById<ImageView>(R.id.EyeIcon)
+        eyeIcon.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                passwordEditText.inputType = InputType.TYPE_CLASS_TEXT
+            } else {
+                passwordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+            passwordEditText.setSelection(passwordEditText.text.length)
         }
     }
 

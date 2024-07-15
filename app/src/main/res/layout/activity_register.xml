@@ -26,7 +26,7 @@
                     android:id="@+id/registerLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/header_background"
+                    android:background="@drawable/gradient_color"
                     android:gravity="center"
                     android:padding="16dp"
                     android:text="Register"
@@ -55,8 +55,7 @@
                             android:layout_height="48dp"
                             android:fontFamily="@font/inriasans_regular"
                             android:hint="Username"
-                            android:inputType="text"
-                            android:theme="@style/EditTextOrangeUnderline" />
+                            android:inputType="text" />
 
                         <ImageView
                             android:id="@+id/UserIcon"
@@ -82,8 +81,7 @@
                             android:layout_height="48dp"
                             android:fontFamily="@font/inriasans_regular"
                             android:hint="Email"
-                            android:inputType="textEmailAddress"
-                            android:theme="@style/EditTextOrangeUnderline" />
+                            android:inputType="textEmailAddress" />
 
                         <ImageView
                             android:id="@+id/EmailIcon"
@@ -110,8 +108,7 @@
                                 android:fontFamily="@font/inriasans_regular"
                                 android:hint="Password"
                                 android:inputType="textPassword"
-                                android:paddingEnd="48dp"
-                                android:theme="@style/EditTextOrangeUnderline" />
+                                android:paddingEnd="48dp" />
 
                         <ImageView
                             android:id="@+id/PasswordIcon"
@@ -138,8 +135,7 @@
                             android:fontFamily="@font/inriasans_regular"
                             android:hint="Confirm Password"
                             android:inputType="textPassword"
-                            android:paddingEnd="48dp"
-                            android:theme="@style/EditTextOrangeUnderline" />
+                            android:paddingEnd="48dp" />
 
                         <ImageView
                             android:id="@+id/ConfirmPasswordIcon"
@@ -165,6 +161,36 @@
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:fontFamily="@font/inriasans_bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:id="@+id/forgotPasswordTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingEnd="16dp"
+                            android:text="Forgot Password"
+                            android:textColor="#F47622"
+                            android:fontFamily="@font/inriasans_regular" />
+
+                        <TextView
+                            android:id="@+id/loginTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingEnd="16dp"
+                            android:text="Login"
+                            android:textColor="#F47622"
+                            android:fontFamily="@font/inriasans_regular" />
+
+                    </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

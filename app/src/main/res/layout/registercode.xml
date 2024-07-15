@@ -4,26 +4,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
-
-    <!-- Background with shadow effect -->
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/card_background"
-        android:padding="10dp">
-
-
-
         <!-- CardView with register form -->
         <androidx.cardview.widget.CardView
             android:id="@+id/registerCard"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:elevation="5dp"
+            android:layout_centerInParent="true"
             android:layout_marginTop="16dp"
-            app:cardCornerRadius="10dp"
-            android:background="@drawable/shawdow_background">
+            app:cardCornerRadius="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -34,7 +23,7 @@
                     android:id="@+id/registerLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/header_background"
+                    android:background="@drawable/gradient_color"
                     android:gravity="center"
                     android:padding="16dp"
                     android:text="Account Verification"
@@ -195,5 +184,4 @@
                 </LinearLayout>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-    </RelativeLayout>
 </RelativeLayout>

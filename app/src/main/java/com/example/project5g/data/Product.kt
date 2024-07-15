@@ -1,17 +1,19 @@
 package com.example.project5g.data
 
 data class Product(
-    val id: String? = null,
-    val categoryId: String? = null,
-    val supplierId: String? = null,
-    val barcode: String? = null,
-    val name: String? = null,
-    val price: Float,
+    val id: String,
+    val categoryId: String,
+    val supplierId: String,
+    val barcode: String,
+    val name: String,
+    val price: Int,
     val stock: Int,
-    val ws_price: Float,
-    val ws: Float,
-    var image: String? = null,
-    var imageURL: String? = null,
-    var category: String? = null,
-    var supplier: String? = null
+    val ws_price: Int,
+    val ws: Int,
+    val image: String?,
+    val imageURL: String,
+    val createDate: String,
+    val discount: Int,
+    val category: Categories,
+    val supplier: Any? // Assuming supplier can be any type or null
 )

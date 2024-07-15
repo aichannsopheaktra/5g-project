@@ -13,16 +13,23 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Url
 
 interface ApiInterface {
     @GET("CustomerAPI")
     fun getCustomer(@HeaderMap headers: Map<String, String>): Call<Customer>
 
+    @PUT("CustomerAPI/{id}")
+    fun updateCustomer(@Path("id") id: String, @Body customer: Customer): Call<Customer>
+
     @GET("CustomerAPI/products?categoryId&type=all")
-    fun getProduct(): Call<List<Product>>
+    fun getProducts(): Call<List<Product>>
+
     @GET("CustomerAPI/categories")
     fun getCategories(): Call<List<Categories>>
+
     @POST("CustomerAPI/login")
     fun loginUser(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
@@ -41,6 +48,7 @@ interface ApiInterface {
 //    testing
     @GET
     fun getHomeProduct(@Url url: String): Call<List<HomeProduct>>
-//    @GET("CustomerAPI/{product}")
-//    fun getHomeProduct(@Path("product") pro : String?, @Query("type") t: String?): Call<List<HomeProduct>>
+
+
+
 }
