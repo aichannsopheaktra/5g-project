@@ -35,16 +35,25 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         }
     }
 
-    fun getCustomer(): Call<Customer> {
+    fun getCustomers(): Call<Customer> {
         checkTokenValidity()
         val headers = HashMap<String, String>()
         headers["Authorization"] = "Bearer $token" // Add the token to the Authorization header
-        return apiInterface.getCustomer(headers)
+        return apiInterface.getCustomers(headers)
+    }
+
+    fun getUsernames(): Call<List<String>> {
+        return apiInterface.getUsernames()
     }
 
     fun updateCustomer(customer: Customer): Call<Customer> {
         checkTokenValidity()
         return apiInterface.updateCustomer(customer.id, customer)
+    }
+
+    fun updatePassword(id: String, password: String): Call<Void> {
+        checkTokenValidity()
+        return apiInterface.updatePassword(id, password)
     }
 
     fun getProduct(): Call<List<Product>> {
@@ -59,6 +68,29 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
 
     fun loginUser(loginRequest: LoginRequest): Call<LoginResponse> {
         return apiInterface.loginUser(loginRequest)
+    }
+
+    fun createCustomer(registerRequest: RegisterRequest): Call<Void> {
+        return apiInterface.createCustomer(registerRequest)
+    }
+
+    fun sendForgotPasswordEmail(email: String): Call<PinResponse> {
+        val endpoint = "CustomerAPI/forgot?email=$email"
+        return apiInterface.sendEmail(endpoint)
+    }
+
+    fun sendForgotPasswordPhone(phone: String): Call<PinResponse> {
+        val endpoint = "CustomerAPI/forgot?phone=$phone"
+        return apiInterface.sendPhone(endpoint)
+    }
+    fun sendRegisterEmail(email: String): Call<PinResponse> {
+        val endpoint = "CustomerAPI/register?email=$email"
+        return apiInterface.sendEmail(endpoint)
+    }
+
+    fun sendRegisterPhone(phone: String): Call<PinResponse> {
+        val endpoint = "CustomerAPI/register?phone=$phone"
+        return apiInterface.sendPhone(endpoint)
     }
 
     fun getCart(callback: Callback<List<CartItem>>) {
@@ -82,11 +114,11 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         return apiInterface.cart("CustomerAPI/reduce-cart?ProductId=$productId", headers)
     }
 
-    fun purchase(): Call<Void> {
+    fun purchase(balance: Boolean): Call<Void> {
         checkTokenValidity()
         val headers = HashMap<String, String>()
         headers["Authorization"] = "Bearer $token"
-        return apiInterface.purchase(headers)
+        return apiInterface.purchase("CustomerAPI/purchase?balance=$balance", headers)
     }
     
     fun getPurchases(callback: Callback<List<Purchases>>){
@@ -98,8 +130,13 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
 
     fun getHomeProduct(type: String): Call<List<HomeProduct>> {
         checkTokenValidity()
-        val headers = HashMap<String, String>()
         return apiInterface.getHomeProduct("CustomerAPI/products?type=\"$type\"")
     }
 
+    fun scanToPay(id: String): Call<Void> {
+        checkTokenValidity()
+        val headers = HashMap<String, String>()
+        headers["Authorization"] = "Bearer $token"
+        return apiInterface.scanToPay("CustomerAPI/ValidatePayment/$id", headers)
+    }
 }

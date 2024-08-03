@@ -1,9 +1,9 @@
 package com.example.project5g.ui
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -89,6 +89,7 @@ class ProductAdapter(private val viewModel: HomeViewModel) :
     ) : RecyclerView.ViewHolder(itemView) {
         private val pName1: TextView = itemView.findViewById(R.id.item_name1)
         private val pPrice1: TextView = itemView.findViewById(R.id.item_price1)
+        private val pDiscountPrice1: TextView = itemView.findViewById(R.id.item_discount_price1)
         private val imageView1: ImageView = itemView.findViewById(R.id.imageView1)
         private val cardView1: View = itemView.findViewById(R.id.cardView1)
 
@@ -96,6 +97,7 @@ class ProductAdapter(private val viewModel: HomeViewModel) :
 
         private val pName2: TextView = itemView.findViewById(R.id.item_name2)
         private val pPrice2: TextView = itemView.findViewById(R.id.item_price2)
+        private val pDiscountPrice2: TextView = itemView.findViewById(R.id.item_discount_price2)
         private val imageView2: ImageView = itemView.findViewById(R.id.imageView2)
         private val cardView2: View = itemView.findViewById(R.id.cardView2)
 
@@ -103,6 +105,24 @@ class ProductAdapter(private val viewModel: HomeViewModel) :
             if (item != null) {
                 pName1.text = item.name
                 pPrice1.text = "$" + item.price.toString()
+                val discountPercentage = item.discount / 100.0
+                val discountPrice = item.price - (item.price * discountPercentage)
+//                println(item.price.toString() + "full")
+//                println(item.discount.toString() + "%")
+//                println(discountPercentage.toString() + "%.o")
+//                println(discountPrice.toString() + "dis")
+
+                if (item.discount > 0 && discountPrice < item.price) {
+                    pDiscountPrice1.text = "$" + String.format("%.2f", discountPrice)
+                    pDiscountPrice1.visibility = View.VISIBLE
+                    pPrice1.setTextColor(itemView.context.getColor(android.R.color.darker_gray)) // Normal price color
+                    pPrice1.paintFlags = pPrice1.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                } else {
+                    pDiscountPrice1.visibility = View.GONE
+                    pPrice1.setTextColor(itemView.context.getColor(android.R.color.holo_red_dark)) // Red color if no discount
+                    pPrice1.paintFlags = pPrice1.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv() // Remove strikethrough effect
+                }
+
                 val imageUrl = "https://5g.csproject.org/images/${item.imageURL}"
                 Glide.with(itemView)
                     .load(imageUrl)
@@ -120,6 +140,18 @@ class ProductAdapter(private val viewModel: HomeViewModel) :
             if (item != null) {
                 pName2.text = item.name
                 pPrice2.text = "$" + item.price.toString()
+                val discountPercentage = item.discount / 100.0
+                val discountPrice = item.price - (item.price * discountPercentage)
+                if (item.discount > 0 && discountPrice < item.price){
+                    pDiscountPrice2.text = "$" + String.format("%.2f", discountPrice)
+                    pDiscountPrice2.visibility = View.VISIBLE
+                    pPrice2.setTextColor(itemView.context.getColor(android.R.color.darker_gray))
+                    pPrice2.paintFlags = pPrice2.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                } else {
+                    pDiscountPrice2.visibility = View.GONE
+                    pPrice2.setTextColor(itemView.context.getColor(android.R.color.holo_red_dark))
+                    pPrice2.paintFlags = pPrice2.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv() // Remove strikethrough effect
+                }
                 val imageUrl = "https://5g.csproject.org/images/${item.imageURL}"
                 Glide.with(itemView)
                     .load(imageUrl)

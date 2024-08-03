@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.example.project5g.R
 import com.example.project5g.api.ApiClient
 import com.example.project5g.api.ApiInterface
 import com.example.project5g.data.HomeRepository
+import com.example.project5g.ui.dialog.cart.CartDialog
 import com.example.project5g.viewmodel.HomeViewModel
 import com.example.project5g.viewmodel.HomeViewModelFactory
 
@@ -31,13 +33,14 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private lateinit var totalTextView: TextView
 
 
+
     private val factory: HomeViewModelFactory by lazy {
         val apiInterface = ApiClient.instance.create(ApiInterface::class.java)
         val repository = HomeRepository(apiInterface, requireContext())
         HomeViewModelFactory(repository)
     }
 
-    private val viewModel: HomeViewModel by viewModels { factory }
+    private val viewModel: HomeViewModel by activityViewModels { factory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,25 +52,24 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         progressBar = view.findViewById(R.id.progress)
         totalTextView = view.findViewById(R.id.totalTextView)
         view.findViewById<Button>(R.id.payButton).setOnClickListener {
-            showConfirmationDialog()
+            if (isCartEmpty()) {
+                Toast.makeText(requireContext(), "Cart is empty", Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.fetchCustomers()
+                val total = totalTextView.text.toString().toFloatOrNull() ?: 0f
+                val cartDialog = CartDialog(requireContext(), viewModel)
+                cartDialog.show(total)
+            }
         }
+
         initAdapter()
         return view
     }
 
-    private fun showConfirmationDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Confirm Payment")
-            .setMessage("Are you sure you want to proceed with the payment?")
-            .setPositiveButton("Yes") { _, _ ->
-                // User clicked "Yes," handle payment logic here
-                viewModel.purchase()
-            }
-            .setNegativeButton("Cancel") { _, _ ->
-                // User clicked "Cancel," do nothing
-            }
-            .show()
+    private fun isCartEmpty(): Boolean {
+        return adapter.itemCount == 0
     }
+
     private fun initAdapter() {
         adapter = CartAdapter(
             ArrayList(),
@@ -88,8 +90,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 // Reload fragment if purchase was successful
                 reloadFragment()
             } else {
-                // Handle purchase failure if needed
-                // Example: show error message to user
                 Toast.makeText(requireContext(), "Purchase failed", Toast.LENGTH_SHORT).show()
             }
         })

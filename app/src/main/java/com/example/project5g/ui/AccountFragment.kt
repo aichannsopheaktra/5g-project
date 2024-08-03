@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.project5g.LoginActivity
@@ -29,7 +30,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     private lateinit var logoutButton: Button
     private lateinit var detailButton: Button
     private lateinit var customerName: TextView
-    private lateinit var customerEmail: TextView
+    private lateinit var customerUsername: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var checkBalanceCard: CardView
     private lateinit var changePasswordCard: CardView
@@ -40,7 +41,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         HomeViewModelFactory(repository)
     }
 
-    private val viewModel: HomeViewModel by viewModels { factory }
+    private val viewModel: HomeViewModel by activityViewModels { factory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +51,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         val view = inflater.inflate(R.layout.fragment_account, container, false)
 
         customerName = view.findViewById(R.id.customerName)
-        customerEmail = view.findViewById(R.id.customerEmail)
+        customerUsername = view.findViewById(R.id.customerUsername)
         logoutButton = view.findViewById(R.id.logoutButton)
         detailButton = view.findViewById(R.id.detailButton)
         progressBar = view.findViewById(R.id.progress)
@@ -109,11 +110,11 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         })
 
         progressBar.visibility = View.VISIBLE // Show progress bar before API call
-        viewModel.fetchCustomer()
+        viewModel.fetchCustomers()
     }
 
     private fun displayCustomerData(customer: Customer) {
         customerName.text = customer.name
-        customerEmail.text = customer.email
+        customerUsername.text = customer.username
     }
 }

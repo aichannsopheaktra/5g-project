@@ -1,5 +1,6 @@
 package com.example.project5g.ui
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,14 +48,20 @@ class CartAdapter(
         var totalPrice = 0.0
         for (cartItem in cartItems) {
             val product = cartItem.product
-            val price = product?.price
-            val qty = quantitiesMap[product?.id] ?: cartItem.qty
+            val price = product.price
+            val discount = product.discount
+            val qty = quantitiesMap[product.id] ?: cartItem.qty
+
             if (product != null && price != null) {
-                totalPrice += price * qty
+                // Calculate the discounted price if a discount is present
+                val discountPercentage = discount / 100.0
+                val discountedPrice = price - (price * discountPercentage)
+                totalPrice += discountedPrice * qty
             }
         }
-        totalTextView.text = "TOTAL : $$totalPrice"
+        totalTextView.text = String.format("TOTAL : $ %.2f", totalPrice)
     }
+
 
     fun removeItem(position: Int) {
         val cartItem = cartItems[position]
@@ -74,13 +81,29 @@ class CartAdapter(
         private val productNameTextView: TextView = itemView.findViewById(R.id.productNameTextView)
         private val qtyTextView: TextView = itemView.findViewById(R.id.qtyTextView)
         private val priceTextView: TextView = itemView.findViewById(R.id.priceTextView)
+        private val discountPriceTextView: TextView = itemView.findViewById(R.id.discountPriceTextView)
         private val imageView: ImageView = itemView.findViewById(R.id.cartImageView)
 
         fun bind(cartItem: CartItem) {
             val product = cartItem.product
             productNameTextView.text = product?.name
             qtyTextView.text = cartItem.qty.toString()
-            priceTextView.text = "$${product?.price}"
+            priceTextView.text = "$${product.price}"
+            val discountPercentage = product.discount / 100.0 // Convert discount percentage to decimal
+            val discountPrice = product.price - (product.price * discountPercentage)
+
+            if (product.discount > 0 && discountPrice < product.price) {
+                priceTextView.text =  "$${product.price}"
+                priceTextView.setTextColor(itemView.context.getColor(android.R.color.darker_gray)) // Normal price color
+                priceTextView.paintFlags = priceTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG // Add strikethrough effect
+                discountPriceTextView.text = String.format("$%.2f", discountPrice) // Format discount price to 2 decimal places
+                discountPriceTextView.visibility = View.VISIBLE
+            } else {
+                priceTextView.text =  "$${product.price}"
+                priceTextView.setTextColor(itemView.context.getColor(android.R.color.holo_red_dark))
+                priceTextView.paintFlags = priceTextView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv() // Remove strikethrough effect
+                discountPriceTextView.visibility = View.GONE
+            }
             val imageUrl = "https://5g.csproject.org/images/${product?.imageURL}"
             Glide.with(itemView)
                 .load(imageUrl)

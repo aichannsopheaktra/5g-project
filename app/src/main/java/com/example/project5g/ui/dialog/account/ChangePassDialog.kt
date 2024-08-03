@@ -1,9 +1,11 @@
 package com.example.project5g.ui.dialog.account
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.text.InputType
 import android.view.LayoutInflater
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -25,19 +27,27 @@ class ChangePassDialog(
 
     fun show() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_account_change_pass, null)
-        val oldPasswordEditText = dialogView.findViewById<EditText>(R.id.OldPasswordEditText)
-        val newPasswordEditText1 = dialogView.findViewById<EditText>(R.id.NewPasswordEditText1)
-        val newPasswordEditText2 = dialogView.findViewById<EditText>(R.id.NewPasswordEditText2)
-        val eyeIcon1 = dialogView.findViewById<ImageView>(R.id.EyeIcon1)
-        val eyeIcon2 = dialogView.findViewById<ImageView>(R.id.EyeIcon2)
-        val eyeIcon3 = dialogView.findViewById<ImageView>(R.id.EyeIcon3)
+        val oldPasswordEditText = dialogView.findViewById<EditText>(R.id.oldPasswordEditText)
+        val newPasswordEditText1 = dialogView.findViewById<EditText>(R.id.newPasswordEditText1)
+        val newPasswordEditText2 = dialogView.findViewById<EditText>(R.id.newPasswordEditText2)
+        val eyeIcon1 = dialogView.findViewById<ImageView>(R.id.eyeIcon1)
+        val eyeIcon2 = dialogView.findViewById<ImageView>(R.id.eyeIcon2)
+        val eyeIcon3 = dialogView.findViewById<ImageView>(R.id.eyeIcon3)
         val buttonSave = dialogView.findViewById<Button>(R.id.buttonSave)
         val buttonExit = dialogView.findViewById<Button>(R.id.buttonExit)
         // Create the dialog
-        val dialog = AlertDialog.Builder(context)
-            .setView(dialogView)
-            .setTitle("Change Password")
-            .create()
+        val dialog = Dialog(context, R.style.Dialog)
+        dialog.setContentView(dialogView)
+
+        // Set the width and height of the dialog
+        val window = dialog.window
+        if (window != null) {
+            val layoutParams = WindowManager.LayoutParams()
+            layoutParams.copyFrom(window.attributes)
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+            window.attributes = layoutParams
+        }
 
         // Set click listeners for eye icons to toggle password visibility
         eyeIcon1.setOnClickListener {
@@ -83,7 +93,7 @@ class ChangePassDialog(
                     }
 
                     // Show success message
-                    Toast.makeText(context, "Password changed successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Password changed successfully!", Toast.LENGTH_SHORT).show()
 
                     // Dismiss the dialog
                     dialog.dismiss()

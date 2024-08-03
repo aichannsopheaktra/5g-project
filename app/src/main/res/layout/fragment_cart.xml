@@ -22,7 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/gradient_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +42,7 @@
                 android:fontFamily="@font/inria_sans_bold"
                 android:gravity="end"
                 android:inputType="text"
-                android:text="TOTAL : $0.00"
+                android:text="TOTAL : $ 0.00"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
                 android:textStyle="bold"/>
@@ -52,10 +51,11 @@
                 android:id="@+id/payButton"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:backgroundTint="@android:color/white"
+                android:layout_margin="6dp"
+                android:background="@drawable/round_white_button"
                 android:text="Pay"
                 android:textColor="#F47622"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:textStyle="bold"/>
         </LinearLayout>
     </RelativeLayout>

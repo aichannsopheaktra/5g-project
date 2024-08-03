@@ -1,30 +1,62 @@
 package com.example.project5g
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.project5g.api.ApiClient
+import com.example.project5g.api.ApiInterface
+import com.example.project5g.data.HomeRepository
 import com.example.project5g.ui.AccountFragment
 import com.example.project5g.ui.CartFragment
 import com.example.project5g.ui.HistoryFragment
 import com.example.project5g.ui.HomeFragment
 import com.example.project5g.ui.ProductFragment
+import com.example.project5g.ui.dialog.cart.CartConfirmPasswordDialog
+import com.example.project5g.ui.dialog.main.MainConfirmPasswordDialog
+import com.example.project5g.viewmodel.HomeViewModel
+import com.example.project5g.viewmodel.HomeViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var viewModel: HomeViewModel
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            startQRScanner()
+        } else {
+            Toast.makeText(this, "Camera permission is required to scan QR codes", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
+        val apiInterface = ApiClient.instance.create(ApiInterface::class.java)
+        val homeRepository = HomeRepository(apiInterface, this)
+        val viewModelFactory = HomeViewModelFactory(homeRepository)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
@@ -40,6 +72,11 @@ class MainActivity : AppCompatActivity() {
             val loginIntent = Intent(this, LoginActivity::class.java)
             startActivity(loginIntent)
             finish() // Finish MainActivity to prevent going back
+        }
+        val scanButton = findViewById<ImageButton>(R.id.scanButton)
+        scanButton.setOnClickListener {
+            viewModel.fetchCustomers()
+            checkCameraPermissionAndStartScanner()
         }
     }
 
@@ -92,10 +129,54 @@ class MainActivity : AppCompatActivity() {
         pageTitle.text = when (fragment) {
             is HomeFragment -> "Home"
             is ProductFragment -> "Product"
-            is CartFragment -> "Buy"
-            is HistoryFragment -> "Receipt"
-            is AccountFragment -> "User"
+            is CartFragment -> "Cart"
+            is HistoryFragment -> "History"
+            is AccountFragment -> "Account"
             else -> ""
         }
     }
+
+    private fun checkCameraPermissionAndStartScanner() {
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
+                // You can use the camera
+                startQRScanner()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
+                // In an educational UI, explain to the user why your app requires this permission for a specific feature to behave as expected.
+                Toast.makeText(this, "Camera permission is required to scan QR codes", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                // You can directly ask for the permission.
+                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
+        }
+    }
+    private fun startQRScanner() {
+        val integrator = IntentIntegrator(this)
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+        integrator.setPrompt("Please scan QR code to pay.")
+        integrator.setCameraId(0) // Use a specific camera of the device
+        integrator.setBeepEnabled(false) // Enable beep sound
+        integrator.setBarcodeImageEnabled(true) // Capture barcode image
+        integrator.captureActivity = CustomCaptureActivity::class.java
+        integrator.initiateScan()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents != null) {
+                val resultContents = result.contents
+                viewModel.customerData.value?.let { customer ->
+                    MainConfirmPasswordDialog(this, customer, viewModel,resultContents).show()
+                }
+            } else {
+                Toast.makeText(this, "Cancelled scan", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
 }

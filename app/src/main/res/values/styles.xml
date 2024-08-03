@@ -19,4 +19,8 @@
         <item name="colorControlNormal">#DE5B00</item>
         <item name="colorControlHighlight">#DE5B00</item>
     </style>
+    <style name="Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>

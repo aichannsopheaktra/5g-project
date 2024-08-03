@@ -1,11 +1,14 @@
 package com.example.project5g.ui.dialog.account
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.Toast
 import com.example.project5g.MainActivity
 import com.example.project5g.R
 import com.example.project5g.data.Customer
@@ -42,10 +45,18 @@ class DetailDialog(
             }
         }
 
-        val dialog = AlertDialog.Builder(context)
-            .setView(dialogView)
-            .setTitle("Customer Details")
-            .create()
+        val dialog = Dialog(context, R.style.Dialog)
+        dialog.setContentView(dialogView)
+
+        // Set the width and height of the dialog
+        val window = dialog.window
+        if (window != null) {
+            val layoutParams = WindowManager.LayoutParams()
+            layoutParams.copyFrom(window.attributes)
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+            window.attributes = layoutParams
+        }
 
         buttonSave.setOnClickListener {
             val name = editTextName.text.toString()
@@ -57,19 +68,28 @@ class DetailDialog(
             val dobDay = String.format("%02d", datePickerDOB.dayOfMonth) // Ensure two digits with leading zero
             val dob = "$dobYear-$dobMonth-$dobDay"
 
-            // Update customer data
-            val updatedCustomer = customer.copy(name = name, email = email, phone = phone, dob = dob)
+            // Check if any data has changed
+            if (name == customer.name && email == customer.email && phone == customer.phone && dob == customer.dob) {
+                // Display toast message indicating no changes
+                Toast.makeText(context, "Nothing has changed", Toast.LENGTH_SHORT).show()
+            } else {
+                // Update customer data
+                val updatedCustomer = customer.copy(name = name, email = email, phone = phone, dob = dob)
 
-            // Trigger the callback with updated customer data
-            onCustomerUpdated(updatedCustomer)
+                // Trigger the callback with updated customer data
+                onCustomerUpdated(updatedCustomer)
 
-            // Call replaceFragment from MainActivity
-            if (context is MainActivity) {
-                context.replaceFragment(AccountFragment::class.java)
+                // Display success toast message
+                Toast.makeText(context, "Customer details updated successfully", Toast.LENGTH_SHORT).show()
+
+                // Call replaceFragment from MainActivity
+                if (context is MainActivity) {
+                    context.replaceFragment(AccountFragment::class.java)
+                }
+
+                // Dismiss the dialog
+                dialog.dismiss()
             }
-
-            // Dismiss the dialog
-            dialog.dismiss()
         }
 
         buttonExit.setOnClickListener {

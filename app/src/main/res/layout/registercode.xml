@@ -76,7 +76,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:padding="8dp"
-                            android:src="@drawable/user" />
+                            android:src="@drawable/ic_user" />
                     </RelativeLayout>
 
                     <!-- OTP EditText and OTP Verification Layout -->

@@ -1,6 +1,6 @@
 package com.example.project5g.viewmodel
 
-import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +11,11 @@ import com.example.project5g.data.HomeProduct
 import com.example.project5g.data.HomeRepository
 import com.example.project5g.data.LoginRequest
 import com.example.project5g.data.LoginResponse
+import com.example.project5g.data.PinResponse
 import com.example.project5g.data.Product
 import com.example.project5g.data.Purchases
+import com.example.project5g.data.RegisterRequest
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,8 +31,14 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private val _customerData = MutableLiveData<Customer>()
     val customerData: LiveData<Customer> get() = _customerData
 
+    private val _usernameArray = MutableLiveData<List<String>>()
+    val usernameArray: LiveData<List<String>> get() = _usernameArray
+
     private val _loginResponse = MutableLiveData<LoginResponse?>()
     val loginResponse: LiveData<LoginResponse?> get() = _loginResponse
+
+    private val _customerCreationSuccess = MutableLiveData<Boolean>()
+    val customerCreationSuccess: LiveData<Boolean> get() = _customerCreationSuccess
 
     private val _cartData = MutableLiveData<List<CartItem>?>()
     val cartData: LiveData<List<CartItem>?> get() = _cartData
@@ -42,6 +51,12 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     private val _homeproductData = MutableLiveData<List<HomeProduct>?>()
     val homeproductData: LiveData<List<HomeProduct>?> get()=_homeproductData
+
+    private val _pinCode = MutableLiveData<PinResponse>()
+    val pinCode: LiveData<PinResponse> get() = _pinCode
+
+    private val _passwordUpdateSuccess = MutableLiveData<Boolean>()
+    val passwordUpdateSuccess: LiveData<Boolean> get() = _passwordUpdateSuccess
 
     fun fetchProduct() {
         homeRepository.getProduct().enqueue(object : Callback<List<Product>> {
@@ -73,8 +88,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             }
         })
     }
-    fun fetchCustomer() {
-        homeRepository.getCustomer().enqueue(object : Callback<Customer> {
+    fun fetchCustomers() {
+        homeRepository.getCustomers().enqueue(object : Callback<Customer> {
             override fun onResponse(call: Call<Customer>, response: Response<Customer>) {
                 if (response.isSuccessful) {
                     _customerData.value = response.body()
@@ -84,6 +99,22 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             }
 
             override fun onFailure(call: Call<Customer>, t: Throwable) {
+                // Handle failure, optionally set _customerData.value = null
+            }
+        })
+    }
+
+    fun fetchUsernames() {
+        homeRepository.getUsernames().enqueue(object : Callback<List<String>> {
+            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
+                if (response.isSuccessful) {
+                    _usernameArray.value = response.body()
+                } else {
+                    // Handle unsuccessful response, optionally set _customerData.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<List<String>>, t: Throwable) {
                 // Handle failure, optionally set _customerData.value = null
             }
         })
@@ -101,6 +132,22 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
             override fun onFailure(call: Call<Customer>, t: Throwable) {
                 // Handle failure, optionally set _customerData.value = null
+            }
+        })
+    }
+
+    fun updatePassword(userId: String, newPassword: String) {
+        homeRepository.updatePassword(userId, newPassword).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    _passwordUpdateSuccess.value = true
+                } else {
+                    _passwordUpdateSuccess.value = false
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                _passwordUpdateSuccess.value = false
             }
         })
     }
@@ -126,6 +173,106 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             }
         })
     }
+
+    fun createCustomer(registerRequest: RegisterRequest) {
+        homeRepository.createCustomer(registerRequest).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                _customerCreationSuccess.value = response.isSuccessful
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                _customerCreationSuccess.value = false
+            }
+        })
+    }
+
+    fun sendForgotPasswordEmail(email: String) {
+        homeRepository.sendForgotPasswordEmail(email).enqueue(object : Callback<PinResponse> {
+            override fun onResponse(call: Call<PinResponse>, response: Response<PinResponse>) {
+                if (response.isSuccessful) {
+                    _pinCode.value = response.body()
+                } else {
+                    // Handle unsuccessful response by parsing the error body
+                    response.errorBody()?.let { errorBody ->
+                        val errorResponse = Gson().fromJson(errorBody.string(), PinResponse::class.java)
+                        _pinCode.value = errorResponse
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<PinResponse>, t: Throwable) {
+                // Handle network failure scenario
+                val errorResponse = PinResponse("Error", null, null, "Network error: ${t.message}")
+                _pinCode.value = errorResponse
+            }
+        })
+    }
+
+    fun sendForgotPasswordPhone(phone: String) {
+        homeRepository.sendForgotPasswordPhone(phone).enqueue(object : Callback<PinResponse> {
+            override fun onResponse(call: Call<PinResponse>, response: Response<PinResponse>) {
+                if (response.isSuccessful) {
+                    _pinCode.value = response.body()
+                } else {
+                    // Handle unsuccessful response by parsing the error body
+                    response.errorBody()?.let { errorBody ->
+                        val errorResponse = Gson().fromJson(errorBody.string(), PinResponse::class.java)
+                        _pinCode.value = errorResponse
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<PinResponse>, t: Throwable) {
+                // Handle network failure scenario
+                val errorResponse = PinResponse("Error", null, null, "Network error: ${t.message}")
+                _pinCode.value = errorResponse
+            }
+        })
+    }
+    fun sendRegisterEmail(email: String) {
+        homeRepository.sendRegisterEmail(email).enqueue(object : Callback<PinResponse> {
+            override fun onResponse(call: Call<PinResponse>, response: Response<PinResponse>) {
+                if (response.isSuccessful) {
+                    _pinCode.value = response.body()
+                } else {
+                    // Handle unsuccessful response by parsing the error body
+                    response.errorBody()?.let { errorBody ->
+                        val errorResponse = Gson().fromJson(errorBody.string(), PinResponse::class.java)
+                        _pinCode.value = errorResponse
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<PinResponse>, t: Throwable) {
+                // Handle network failure scenario
+                val errorResponse = PinResponse("Error", null, null, "Network error: ${t.message}")
+                _pinCode.value = errorResponse
+            }
+        })
+    }
+
+    fun sendRegisterPhone(phone: String) {
+        homeRepository.sendRegisterPhone(phone).enqueue(object : Callback<PinResponse> {
+            override fun onResponse(call: Call<PinResponse>, response: Response<PinResponse>) {
+                if (response.isSuccessful) {
+                    _pinCode.value = response.body()
+                } else {
+                    // Handle unsuccessful response by parsing the error body
+                    response.errorBody()?.let { errorBody ->
+                        val errorResponse = Gson().fromJson(errorBody.string(), PinResponse::class.java)
+                        _pinCode.value = errorResponse
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<PinResponse>, t: Throwable) {
+                // Handle network failure scenario
+                val errorResponse = PinResponse("Error", null, null, "Network error: ${t.message}")
+                _pinCode.value = errorResponse
+            }
+        })
+    }
+
     fun fetchCarts() {
         homeRepository.getCart(object : Callback<List<CartItem>> {
             override fun onResponse(call: Call<List<CartItem>>, response: Response<List<CartItem>>) {
@@ -166,8 +313,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             }
         })
     }
-    fun purchase() {
-        homeRepository.purchase().enqueue(object : Callback<Void> {
+    fun purchase(balance: Boolean) {
+        homeRepository.purchase(balance).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 _purchaseSuccess.value = true
                 fetchCarts()
@@ -212,6 +359,16 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
         })
     }
+    fun scanToPay(id: String) {
+        homeRepository.scanToPay(id).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                // Handle response if needed
+            }
 
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                // Handle failure if needed
+            }
+        })
+    }
 
 }

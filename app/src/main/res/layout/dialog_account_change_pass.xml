@@ -1,111 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp">
-
-        <EditText
-            android:id="@+id/OldPasswordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Old Password"
-            android:inputType="textPassword"
-            android:paddingEnd="48dp"
-            android:theme="@style/EditTextOrangeUnderline"
-            android:fontFamily="@font/inriasans_regular" />
-
-        <ImageView
-            android:id="@+id/EyeIcon1"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="8dp"
-            android:src="@drawable/eye" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp">
-
-        <EditText
-            android:id="@+id/NewPasswordEditText1"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingEnd="48dp"
-            android:theme="@style/EditTextOrangeUnderline"
-            android:fontFamily="@font/inriasans_regular" />
-
-        <ImageView
-            android:id="@+id/EyeIcon2"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:padding="8dp"
-            android:src="@drawable/eye" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp">
-
-        <EditText
-            android:id="@+id/NewPasswordEditText2"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:paddingEnd="48dp"
-            android:theme="@style/EditTextOrangeUnderline"
-            android:fontFamily="@font/inriasans_regular" />
-
-        <ImageView
-            android:id="@+id/EyeIcon3"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:padding="8dp"
-            android:src="@drawable/eye" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/buttonExit"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/dialogTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:background="@drawable/button_background"
-            android:textColor="@android:color/white"
-            android:text="Exit"/>
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="0dp"
+            android:text="Change Password"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingBottom="16dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp">
+
+            <EditText
+                android:id="@+id/oldPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Old Password"
+                android:inputType="textPassword"
+                android:paddingEnd="48dp"
+                android:fontFamily="@font/inriasans_regular" />
+
+            <ImageView
+                android:id="@+id/eyeIcon1"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_eye" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp">
+
+            <EditText
+                android:id="@+id/newPasswordEditText1"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingEnd="48dp"
+                android:fontFamily="@font/inriasans_regular" />
+
+            <ImageView
+                android:id="@+id/eyeIcon2"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_eye" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp">
+
+            <EditText
+                android:id="@+id/newPasswordEditText2"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:paddingEnd="48dp"
+                android:fontFamily="@font/inriasans_regular" />
+
+            <ImageView
+                android:id="@+id/eyeIcon3"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_eye" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:background="@drawable/button_background"
-            android:textColor="@android:color/white"
-            android:text="Save"/>
+            android:orientation="horizontal">
 
-
+            <Button
+                android:id="@+id/buttonExit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/round_white_button"
+                android:textColor="@color/primary_light"
+                android:text="Exit"/>
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/round_gradient_button"
+                android:textColor="@android:color/white"
+                android:text="Save"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

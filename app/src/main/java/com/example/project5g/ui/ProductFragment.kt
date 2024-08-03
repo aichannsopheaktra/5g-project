@@ -126,7 +126,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                setMargins(8, 8, 8, 8) // left, top, right, bottom margins
+                setMargins(8, 8, 0, 8) // left, top, right, bottom margins
             }
             defaultRadioButton.layoutParams = params
 
@@ -163,7 +163,7 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 ).apply {
-                    setMargins(8, 8, 8, 8) // left, top, right, bottom margins
+                    setMargins(0, 8, 0, 8) // left, top, right, bottom margins
                 }
                 radioButton.layoutParams = params
 

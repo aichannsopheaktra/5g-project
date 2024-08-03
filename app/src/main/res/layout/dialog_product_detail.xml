@@ -1,138 +1,117 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="0dp"
-    android:background="@android:color/white">
+    android:background="@color/white95"
+    android:padding="0dp">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_image"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/detail_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:contentDescription="@string/product_image"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="H,16:9" />
 
-        <Button
-            android:id="@+id/exit_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="start|top"
-            android:background="@drawable/arrowleft"
-            android:layout_margin="10dp"
-            android:textColor="#000000" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/name"
+    <Button
+        android:id="@+id/exit_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_arrow"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+    <LinearLayout
+        android:id="@+id/layout_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:fontFamily="@font/inriasans_regular"
-        android:text="Name"
-        android:layout_margin="10dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:textSize="25sp" />
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/layout_image"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp">
+        <TextView
+            android:id="@+id/detail_discount_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/inriasans_regular"
+            android:text="$0"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="20sp"
+            android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-
-        android:text="Price : 10$"
-        android:fontFamily="@font/inriasans_regular"
-        android:layout_margin="10dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:textSize="25sp" />
-
-    <TextView
-        android:id="@+id/category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_margin="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_background"
-        android:fontFamily="@font/inriasans_regular"
-        android:padding="5dp"
-        android:text="T-Shirt"
-        android:textColor="@color/white"
-        android:textSize="25sp" />
+        <TextView
+            android:id="@+id/detail_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/inriasans_regular"
+            android:text="$0"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/detail_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:layout_below="@id/layout_price"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/inriasans_regular"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
 
     <TextView
-        android:id="@+id/detail_price"
+        android:id="@+id/detail_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        android:textColor="@android:color/holo_red_dark" />
+        android:layout_below="@id/detail_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:elevation="2dp"
+        android:background="@drawable/round_white_button"
+        android:fontFamily="@font/inriasans_regular"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp"
+        android:text="Category"
+        android:textSize="15sp" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
+        android:id="@+id/relativeLayoutCart"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="214dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="#F0F0F0"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:elevation="20dp">
 
         <Button
-            android:id="@+id/add_to_cart_button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/button_background"
-            android:fontFamily="@font/inriasans_bold"
-            android:text="@string/add_to_cart"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.Toolbar>
+            android:id="@+id/add_Button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_margin="6dp"
+            android:background="@drawable/round_gradient_button"
+            android:text="@string/add"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar1"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="214dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="#F0F0F0"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/add_to_cart_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/button_background"
-            android:fontFamily="@font/inriasans_bold"
-            android:text="@string/add_to_cart"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.Toolbar>
-
-</LinearLayout>
+</RelativeLayout>
