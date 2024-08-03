@@ -18,9 +18,9 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
-        val registerInfoFragment = RegisterInfoFragment()
+        val registerEmailFragment = RegisterEmailFragment()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, registerInfoFragment)
+            .replace(R.id.fragmentContainer, registerEmailFragment)
             .commit()
     }
 }
