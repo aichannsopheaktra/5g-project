@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="0dp">
 
     <!-- First Product Card -->
     <androidx.cardview.widget.CardView
@@ -27,7 +27,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp">
 
             <ImageView
                 android:id="@+id/homeproImg"
@@ -109,7 +110,7 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView" />
 
             <Button
-                android:id="@+id/addButton1"
+                android:id="@+id/btn_close"
                 android:layout_width="74dp"
                 android:layout_height="33dp"
                 android:layout_gravity="center_horizontal"

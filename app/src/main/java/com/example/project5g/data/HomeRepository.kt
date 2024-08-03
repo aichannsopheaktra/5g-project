@@ -8,6 +8,7 @@ import com.example.project5g.api.ApiInterface
 import com.example.project5g.ui.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.http.Url
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
@@ -79,7 +80,7 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         return apiInterface.purchase(headers)
     }
     
-    fun getPurchases(callback: Callback<List<Purchases>>){
+    fun getPurchases(callback: Callback<History>){
         checkTokenValidity()
         val headers=HashMap<String,String>()
         headers["Authorization"] = "Bearer $token"
@@ -89,7 +90,8 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
     fun getHomeProduct(type: String): Call<List<HomeProduct>> {
         checkTokenValidity()
         val headers = HashMap<String, String>()
-        return apiInterface.getHomeProduct("CustomerAPI/products?type=\"$type\"")
+        var f = "CustomerAPI/products?type=$type";
+        return apiInterface.getHomeProduct(f)
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.project5g.api
 
 import com.example.project5g.data.CartItem
 import com.example.project5g.data.Customer
+import com.example.project5g.data.History
 import com.example.project5g.data.HomeProduct
 import com.example.project5g.data.LoginRequest
 import com.example.project5g.data.LoginResponse
@@ -40,7 +41,7 @@ interface ApiInterface {
     fun purchase(@HeaderMap headers: Map<String, String>): Call<Void>
     
     @GET("CustomerAPI/purchases")
-    fun getPurchases(@HeaderMap headers: Map<String, String>): Call<List<Purchases>>
+    fun getPurchases(@HeaderMap headers: Map<String, String>): Call<History>
 
 //    testing
     @GET

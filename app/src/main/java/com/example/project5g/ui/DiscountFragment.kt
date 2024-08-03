@@ -18,9 +18,9 @@ import com.example.project5g.data.HomeRepository
 import com.example.project5g.viewmodel.HomeViewModel
 import com.example.project5g.viewmodel.HomeViewModelFactory
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class DiscountFragment : Fragment(R.layout.fragment_discount) {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: HomeAdapter
+    private lateinit var adapter: DiscountAdapter
 
     private val factory: HomeViewModelFactory by lazy {
         val apiInterface = ApiClient.instance.create(ApiInterface::class.java)
@@ -30,29 +30,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModels { factory }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home,container,false)
-        recyclerView =view.findViewById(R.id.recyclerViewHomePro);
+        val view = inflater.inflate(R.layout.fragment_discount,container,false)
+        recyclerView =view.findViewById(R.id.recyclerViewDiscountPro);
 
         initAdpater();
         return view
     }
     private fun initAdpater(){
-        adapter = HomeAdapter(ArrayList(),viewModel);
+        adapter = DiscountAdapter(ArrayList(),viewModel);
         recyclerView.layoutManager = LinearLayoutManager(requireContext());
         recyclerView.adapter= adapter;
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetchHomeProduct("all")
+        viewModel.fetchHomeProduct("discount")
         initViewModel();
     }
     private fun initViewModel(){
         viewModel.homeproductData.observe(viewLifecycleOwner,Observer{ proItem->
             recyclerView.visibility= View.VISIBLE
-            System.out.println("tesing at initview")
+            System.out.println("tesing at initview of Discount fragment")
             adapter.setProduct(proItem as ArrayList<HomeProduct>)
-
         })
 
 //        viewModel.purchaseData.observe(viewLifecycleOwner, Observer { proItem->

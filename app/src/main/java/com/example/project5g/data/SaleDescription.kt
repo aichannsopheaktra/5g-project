@@ -7,5 +7,5 @@ data class SaleDescription (
     var price:Double?,
     var qty: Int?,
     var amount: Double?,
-    var product: String?
+    var product: Product?
 )

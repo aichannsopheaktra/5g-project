@@ -71,7 +71,7 @@ class ProductAdapter(private val viewModel: HomeViewModel) : RecyclerView.Adapte
                 Glide.with(itemView)
                     .load(imageUrl)
                     .into(imageView1)
-                itemView.findViewById<Button>(R.id.addButton1).setOnClickListener {
+                itemView.findViewById<Button>(R.id.btn_close).setOnClickListener {
                     item.id?.let { productId ->
                         viewModel.addToCart(productId)
                         showSuccessDialog()

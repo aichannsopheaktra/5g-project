@@ -3,17 +3,27 @@ package com.example.project5g.data
 import org.w3c.dom.Text
 import java.sql.Date
 
-data class Purchases(
-    var id:String?,
-    var customerId :String?,
-    var userId:String?,
-    var date:String?,
-    var total: Double?,
-    var saleDescription:List<SaleDescription>?,
-    var customer: String?,
-    var user:String?,
-    var delivered: Boolean
+data class History(
+    var data : List<Purchases>?,
+    var pagination: Pagination?
 )
+data class Pagination(
+    var totalCount: Int?,
+    var pageSize: Int?,
+    var currentPage: Int?,
+    var totalPages: Int?,
+    var hasNext: Boolean?,
+    var hasPrevious: Boolean?,
+)
+
+//"pagination": {
+//    "totalCount": 105,
+//    "pageSize": 10,
+//    "currentPage": 1,
+//    "totalPages": 11,
+//    "hasNext": true,
+//    "hasPrevious": false
+//}
 
 //"id": "02e9fa55-46f1-436b-bbd9-22d02d666c7a",
 //"customerId": "e30bab80-9eca-4205-bb0c-bfa971b8dfab",

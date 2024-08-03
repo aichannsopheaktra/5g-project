@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.project5g.data.CartItem
 import com.example.project5g.data.Customer
+import com.example.project5g.data.History
 import com.example.project5g.data.HomeProduct
 import com.example.project5g.data.HomeRepository
 import com.example.project5g.data.LoginRequest
@@ -33,8 +34,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private val _purchaseSuccess = MutableLiveData<Boolean>()
     val purchaseSuccess: LiveData<Boolean> = _purchaseSuccess
 
-    private val _purchaseData= MutableLiveData<List<Purchases>?>()
-    val  purchaseData: LiveData<List<Purchases>?> get() = _purchaseData
+    private val _purchaseData= MutableLiveData<History>()
+    val  purchaseData: LiveData<History> get() = _purchaseData
 
     private val _homeproductData = MutableLiveData<List<HomeProduct>?>()
     val homeproductData: LiveData<List<HomeProduct>?> get()=_homeproductData
@@ -140,18 +141,47 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     }
 
     fun fetchPurchase(){
-        homeRepository.getPurchases(object : Callback<List<Purchases>>{
-            override fun onResponse(call: Call<List<Purchases>>, response: Response<List<Purchases>>) {
-                if(response.isSuccessful){
-                    _purchaseData.value = response.body();
+        homeRepository.getPurchases(object : Callback<History>{
+
+            //            override fun onResponse(call: Call<History>, response: Response<History>) {
+//                if(response.isSuccessful){
+//                    _purchaseData.value = response.body();
+//                    System.out.println("HomeViewModal: Success");
+//                    System.out.println("HomeViewModal: Success");
+//                    System.out.println("HomeViewModal: Success");
+//                    System.out.println("HomeViewModal: Success");
+//                    System.out.println(_purchaseData.value);
+//                }else{
+//                    _purchaseData.value=null
+//                }
+//            }
+//            override fun onFailure(call: Call<History>, t: Throwable) {
+//                _purchaseData.value=null
+//                System.out.println(t.message);
+//                System.out.println("Fail");
+//                System.out.println("Fail");
+//                System.out.println("Fail");
+//                System.out.println("Fail");
+//            }
+            override fun onResponse(p0: Call<History>, p1: Response<History>) {
+                if(p1.isSuccessful){
+                    _purchaseData.value = p1.body();
+                    System.out.println("HomeViewModal: Success");
+                    System.out.println("HomeViewModal: Success");
+                    System.out.println("HomeViewModal: Success");
+                    System.out.println("HomeViewModal: Success");
                     System.out.println(_purchaseData.value);
                 }else{
                     _purchaseData.value=null
                 }
             }
-            override fun onFailure(call: Call<List<Purchases>>, t: Throwable) {
+
+            override fun onFailure(p0: Call<History>, p1: Throwable) {
                 _purchaseData.value=null
-                System.out.println(t.message);
+                System.out.println(p1.message);
+                System.out.println("Fail");
+                System.out.println("Fail");
+                System.out.println("Fail");
                 System.out.println("Fail");
             }
 
@@ -168,6 +198,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             }
             override fun onFailure(call: Call<List<HomeProduct>>, t: Throwable) {
                 System.out.println(t);
+                System.out.println("Fetch Fail");
             }
 
         })

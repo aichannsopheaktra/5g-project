@@ -1,5 +1,7 @@
 package com.example.project5g.data
 
+import java.util.Objects
+
 data class HomeProduct(
     var id: String? = null,
     var categoryId: String? = null,
@@ -14,6 +16,10 @@ data class HomeProduct(
     var imageURL: String? = null,
     var createDate: String?=null,
     var discount: Int? =null,
-    var category: String? = null,
+    var category: Category?,
     var supplier: String? = null
+)
+data class Category(
+    var id: String? = null,
+    var name: String? = null
 )
