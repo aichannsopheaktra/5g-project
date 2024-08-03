@@ -12,7 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.project5g.api.ApiClient
@@ -20,6 +22,7 @@ import com.example.project5g.api.ApiInterface
 import com.example.project5g.data.HomeRepository
 import com.example.project5g.ui.AccountFragment
 import com.example.project5g.ui.CartFragment
+import com.example.project5g.ui.DiscountFragment
 import com.example.project5g.ui.HistoryFragment
 import com.example.project5g.ui.HomeFragment
 import com.example.project5g.ui.ProductFragment
@@ -36,7 +39,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var constraintLayout: ConstraintLayout
     private lateinit var viewModel: HomeViewModel
+    private lateinit var newPro: TextView
+    private lateinit var disPro: TextView
+    private  lateinit var underline1: androidx.appcompat.widget.Toolbar
+    private  lateinit var underline2: androidx.appcompat.widget.Toolbar
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -83,6 +91,11 @@ class MainActivity : AppCompatActivity() {
     private fun startMain() {
         bottomNav = findViewById(R.id.bottom_nav)
         toolbar = findViewById(R.id.toolbar)
+        constraintLayout = findViewById(R.id.newdiscounntConstraint)
+        newPro= findViewById(R.id.new_pro)
+        disPro =findViewById(R.id.dis_pro)
+        underline1=findViewById(R.id.u1)
+        underline2=findViewById(R.id.u2)
 
         // Set the initial fragment and selected item
         replaceFragment(HomeFragment::class.java)
@@ -92,29 +105,51 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     replaceFragment(HomeFragment::class.java)
+                    constraintLayout.isVisible=true
+                    underline1.isVisible=true
+                    underline2.isVisible=false
                     true
                 }
                 R.id.navigation_product -> {
                     replaceFragment(ProductFragment::class.java)
+                    constraintLayout.isVisible=false
                     true
                 }
                 R.id.navigation_cart -> {
                     replaceFragment(CartFragment::class.java)
+                    constraintLayout.isVisible=false
                     true
                 }
                 R.id.navigation_history -> {
                     replaceFragment(HistoryFragment::class.java)
+                    constraintLayout.isVisible=false
                     true
                 }
                 R.id.navigation_account -> {
                     replaceFragment(AccountFragment::class.java)
+                    constraintLayout.isVisible=false
                     true
                 }
                 else -> false
             }
         }
+        newPro.setOnClickListener {
+            replaceFragment(HomeFragment::class.java)
+            underline1.isVisible=true
+            underline2.isVisible=false
+//            newPro.setPaintFlags(newPro.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
+        }
+        disPro.setOnClickListener {
+            replaceFragment(DiscountFragment::class.java)
+            underline1.isVisible=false
+            underline2.isVisible=true
+//            disPro.setPaintFlags(disPro.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
+        }
     }
-
+    //    fun TextView.underline() {
+//        paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
+//    }
+//    tv_resend_otp.underline()
     fun replaceFragment(fragmentClass: Class<out Fragment>) {
         val fragment = fragmentClass.newInstance()
         val fragmentManager = supportFragmentManager
@@ -127,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 
         // Update toolbar text based on fragment
         pageTitle.text = when (fragment) {
-            is HomeFragment -> "Home"
+            is HomeFragment -> ""
             is ProductFragment -> "Product"
             is CartFragment -> "Cart"
             is HistoryFragment -> "History"
