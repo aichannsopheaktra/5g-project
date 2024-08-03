@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@drawable/rectangle_sm"
+        android:background="@drawable/gradient_color"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,6 +25,14 @@
             android:text="Product"
             android:textColor="#FFFFFF"
             android:textSize="25sp" />
+        <ImageButton
+            android:id="@+id/scanButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="end"
+            android:background="@drawable/ic_scan"
+            />
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
@@ -45,10 +53,9 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         app:itemIconTint="@null"
-        app:labelVisibilityMode="unlabeled"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 

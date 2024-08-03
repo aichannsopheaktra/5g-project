@@ -44,6 +44,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("androidx.test.espresso:espresso-core:3.6.1")
+    implementation("androidx.activity:activity:1.9.0")
 
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 
@@ -64,6 +65,9 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.4.0-alpha01")
     implementation("com.android.car.ui:car-ui-lib:2.6.0")
 
+    //code scanner
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("com.google.zxing:core:3.4.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

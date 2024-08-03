@@ -51,35 +51,43 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/customerEmail"
+                        android:id="@+id/customerUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="gmail" />
+                        android:text="Username" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
                     android:orientation="vertical">
-                <!-- Buttons -->
+
+                    <!-- Detail Button -->
                     <Button
                         android:id="@+id/detailButton"
                         android:layout_width="90dp"
-                        android:layout_height="35dp"
-                        android:backgroundTint="#F47622"
+                        android:layout_height="30dp"
+                        android:background="@drawable/round_gradient_button"
+                        android:textColor="@android:color/white"
                         android:text="Detail"
-                        android:layout_weight="1"
                         android:textSize="12sp"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
 
+                    <!-- Logout Button -->
                     <Button
                         android:id="@+id/logoutButton"
                         android:layout_width="90dp"
-                        android:layout_height="35dp"
-                        android:backgroundTint="#F47622"
-                        android:layout_weight="1"
+                        android:layout_height="30dp"
+                        android:background="@drawable/round_gradient_button"
+                        android:textColor="@android:color/white"
                         android:text="Logout"
                         android:textSize="12sp"/>
+
                 </LinearLayout>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <!-- Check Balance -->
@@ -105,7 +113,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/user"
+                    android:src="@drawable/ic_balance"
                     android:contentDescription="Check Balance Icon"
                     android:layout_marginStart="16dp"/>
 
@@ -140,8 +148,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/user"
-                    android:contentDescription="Check Balance Icon"
+                    android:src="@drawable/ic_changepass"
                     android:layout_marginStart="16dp"/>
 
                 <TextView
@@ -175,7 +182,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/user"
+                    android:src="@drawable/ic_aboutus"
                     android:contentDescription="Check Balance Icon"
                     android:layout_marginStart="16dp"/>
 
@@ -188,40 +195,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <!-- Help -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/helpCard"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkBalanceCard">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/user"
-                    android:contentDescription="Check Balance Icon"
-                    android:layout_marginStart="16dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Help"
-                    android:textSize="16sp"
-                    android:layout_marginStart="8dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
     </LinearLayout>
     <ProgressBar
         android:id="@+id/progress"
