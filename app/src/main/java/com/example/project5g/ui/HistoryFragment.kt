@@ -31,9 +31,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history){
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: HistoryAdapter
-
-//    private lateinit var totalTextView: TextView
-
     private val factory: HomeViewModelFactory by lazy {
         val apiInterface = ApiClient.instance.create(ApiInterface::class.java)
         val repository = HomeRepository(apiInterface, requireContext())
@@ -54,6 +51,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history){
         adapter = HistoryAdapter(requireContext(), ArrayList(),viewModel,this);
         recyclerView.layoutManager =LinearLayoutManager(requireContext());
         recyclerView.adapter= adapter;
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,11 +63,12 @@ class HistoryFragment : Fragment(R.layout.fragment_history){
         viewModel.purchaseData.observe(viewLifecycleOwner, Observer { purchaseItem->
             recyclerView.visibility = View.VISIBLE
             adapter.setPurchase(purchaseItem?.data as ArrayList<Purchases>)
+            progressBar.visibility = View.GONE
 
         })
     }
 
-    public fun showDialog(purchases: Purchases) {
+    fun showDialog(purchases: Purchases) {
         println(purchases);
         val inflater = requireActivity().layoutInflater
         val dialogView = inflater.inflate(R.layout.frm_receipt, null)

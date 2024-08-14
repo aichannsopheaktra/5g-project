@@ -1,7 +1,5 @@
 package com.example.project5g.data
 
-import java.util.Objects
-
 data class HomeProduct(
     var id: String? = null,
     var categoryId: String? = null,

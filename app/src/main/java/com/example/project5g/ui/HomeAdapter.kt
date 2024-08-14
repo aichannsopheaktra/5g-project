@@ -1,13 +1,12 @@
 package com.example.project5g.ui
 
-import android.app.AlertDialog
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.project5g.R
@@ -60,27 +59,10 @@ class HomeAdapter(private val newproList: ArrayList<HomeProduct>,
             itemView.findViewById<Button>(R.id.btn_close).setOnClickListener {
                 homeProduct.id?.let { productId ->
                     viewModel.addToCart(productId)
-                    showSuccessDialog()
+                    Toast.makeText(itemView.context, "Item added to cart successfully!", Toast.LENGTH_SHORT).show()
                 }
             }
             }
         }
-
-        private fun showSuccessDialog() {
-            val builder = AlertDialog.Builder(itemView.context)
-            builder.setTitle("Success")
-                .setMessage("Item added to cart successfully!")
-            val dialog = builder.create()
-            dialog.show()
-            // Delay the dismissal of the dialog
-            val handler = Handler()
-            handler.postDelayed({
-                dialog.dismiss()
-            }, 1000) // 1000 milliseconds = 1 second
-        }
-//        fun hideView2() {
-//            cardView2.visibility = View.INVISIBLE
-//        }
     }
-
 }
