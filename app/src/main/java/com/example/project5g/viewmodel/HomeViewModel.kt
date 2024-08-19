@@ -47,8 +47,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private val _purchaseSuccess = MutableLiveData<Boolean>()
     val purchaseSuccess: LiveData<Boolean> = _purchaseSuccess
 
-    private val _purchaseData= MutableLiveData<History>()
-    val  purchaseData: LiveData<History> get() = _purchaseData
+    private val _purchaseData= MutableLiveData<History?>()
+    val  purchaseData: MutableLiveData<History?> get() = _purchaseData
 
     private val _homeproductData = MutableLiveData<List<HomeProduct>?>()
     val homeproductData: LiveData<List<HomeProduct>?> get()=_homeproductData
