@@ -4,12 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project5g.R
 import com.example.project5g.data.Purchases
-import com.example.project5g.viewmodel.HomeViewModel
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.time.LocalDateTime
@@ -18,46 +17,35 @@ import java.time.format.DateTimeFormatter
 class HistoryAdapter(
     val context: Context,
     private val purChaseList: ArrayList<Purchases>,
-    private val viewModel: HomeViewModel,
-    val fragment: HistoryFragment) :
-    RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>()
-
-{
-    private val quantitiesMap: MutableMap<String, Int> = mutableMapOf()
-    private  var purchasesData: ArrayList<Purchases> = ArrayList()
+    val fragment: HistoryFragment
+) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_history,parent,false)
-        return HistoryViewHolder(view,viewModel,this)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_history, parent, false)
+        return HistoryViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.bind(purChaseList[position],fragment);
+        holder.bind(purChaseList[position], fragment)
     }
 
-    fun setPurchase(setPurchase: ArrayList<Purchases>) {
-//        purchasesData = setPurchase;
-        purChaseList.addAll(setPurchase);
+    fun setPurchase(newPurchases: ArrayList<Purchases>) {
+        val startPosition = purChaseList.size
+        purChaseList.addAll(newPurchases)
+        notifyItemRangeInserted(startPosition, newPurchases.size)
+    }
+
+    // Add this method to clear purchases
+    fun clearPurchases() {
+        purChaseList.clear()
         notifyDataSetChanged()
-//
-//        cartItems.clear()
-//        cartItems.addAll(setCartItems)
-//        cartItems.forEach { cartItem ->
-//            cartItem.product?.id?.let { productId ->
-//                quantitiesMap[productId] = cartItem.qty
-//            }
-//        }
-//        notifyDataSetChanged()
-//        updateTotal()
-
     }
+
     override fun getItemCount(): Int = purChaseList.size
     var test = HistoryFragment()
 
     class HistoryViewHolder(
         itemView:View,
-        private val viewModel: HomeViewModel,
-        private val adapter: HistoryAdapter,
         ): RecyclerView.ViewHolder(itemView) {
         private val purchasesDate: TextView = itemView.findViewById(R.id.his_datetime);
         private val purchaseAmount: TextView = itemView.findViewById(R.id.txt_his_amount);
@@ -73,7 +61,7 @@ class HistoryAdapter(
             purchasesDate.text= formattedDate
             purchaseAmount.text="$"+num_format.format(purchases.total);
             var receiptList = purchases.saleDescription;
-            itemView.findViewById<ImageButton>(R.id.btn_history_detail).setOnClickListener {
+            itemView.findViewById<Button>(R.id.btn_history_detail).setOnClickListener {
 //            fragment.showDialog();
                 if (receiptList != null) {
 //                disPlayreceipt(receiptList)

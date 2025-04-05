@@ -21,6 +21,7 @@ import com.example.project5g.viewmodel.HomeViewModelFactory
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HomeAdapter
+    private lateinit var progressBar: ProgressBar
 
     private val factory: HomeViewModelFactory by lazy {
         val apiInterface = ApiClient.instance.create(ApiInterface::class.java)
@@ -32,6 +33,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home,container,false)
         recyclerView =view.findViewById(R.id.recyclerViewHomePro);
+        progressBar = view.findViewById(R.id.progressHomePro)
 
         initAdpater();
         return view
@@ -44,22 +46,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetchHomeProduct("all")
+        viewModel.fetchHomeProduct("new")
         initViewModel();
     }
     private fun initViewModel(){
-        viewModel.homeproductData.observe(viewLifecycleOwner,Observer{ proItem->
-            recyclerView.visibility= View.VISIBLE
-            System.out.println("tesing at initview")
-            adapter.setProduct(proItem as ArrayList<HomeProduct>)
+        viewModel.homeproductData.observe(viewLifecycleOwner, Observer { proItem ->
+
+            // Check if proItem is null or empty
+            if (proItem.isNullOrEmpty()) {
+                adapter.setProduct(ArrayList()) // Set empty list to adapter if no data
+            } else {
+                adapter.setProduct(proItem as ArrayList<HomeProduct>) // Cast to ArrayList if necessary
+            }
+            recyclerView.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
 
         })
-
-//        viewModel.purchaseData.observe(viewLifecycleOwner, Observer { proItem->
-//            recyclerView.visibility =View.VISIBLE
-//            System.out.println("sss :"+proItem)
-//            adapter.setPurchase(proItem as ArrayList<Product>)
-//            progressBar.visibility = View.GONE;
-//        })
     }
 }

@@ -121,13 +121,15 @@ class HomeRepository(private val apiInterface: ApiInterface, private val context
         headers["Authorization"] = "Bearer $token"
         return apiInterface.purchase("CustomerAPI/purchase?balance=$balance", headers)
     }
-    
-    fun getPurchases(callback: Callback<History>){
+
+    fun getPurchases(pageNumber: Int, callback: Callback<History>) {
         checkTokenValidity()
-        val headers=HashMap<String,String>()
+        val headers = HashMap<String, String>()
         headers["Authorization"] = "Bearer $token"
-        apiInterface.getPurchases(headers).enqueue(callback)
+        apiInterface.getPurchases(headers, pageNumber).enqueue(callback)
     }
+
+
 
     fun getHomeProduct(type: String): Call<List<HomeProduct>> {
         checkTokenValidity()

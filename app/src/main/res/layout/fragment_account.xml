@@ -160,40 +160,40 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <!-- About Us -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/aboutUsCard"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/aboutUsCard"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            app:cardCornerRadius="8dp"-->
+<!--            app:cardElevation="4dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:gravity="center_vertical">-->
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_aboutus"
-                    android:contentDescription="Check Balance Icon"
-                    android:layout_marginStart="16dp"/>
+<!--                <ImageView-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:src="@drawable/ic_aboutus"-->
+<!--                    android:contentDescription="Check Balance Icon"-->
+<!--                    android:layout_marginStart="16dp"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="About Us"
-                    android:textSize="16sp"
-                    android:layout_marginStart="8dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="About Us"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:layout_marginStart="8dp"/>-->
+<!--            </LinearLayout>-->
+<!--        </androidx.cardview.widget.CardView>-->
         <!-- Help -->
     </LinearLayout>
     <ProgressBar

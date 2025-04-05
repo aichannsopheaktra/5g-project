@@ -327,53 +327,23 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         })
     }
 
-    fun fetchPurchase(){
-        homeRepository.getPurchases(object : Callback<History>{
-
-            //            override fun onResponse(call: Call<History>, response: Response<History>) {
-//                if(response.isSuccessful){
-//                    _purchaseData.value = response.body();
-//                    System.out.println("HomeViewModal: Success");
-//                    System.out.println("HomeViewModal: Success");
-//                    System.out.println("HomeViewModal: Success");
-//                    System.out.println("HomeViewModal: Success");
-//                    System.out.println(_purchaseData.value);
-//                }else{
-//                    _purchaseData.value=null
-//                }
-//            }
-//            override fun onFailure(call: Call<History>, t: Throwable) {
-//                _purchaseData.value=null
-//                System.out.println(t.message);
-//                System.out.println("Fail");
-//                System.out.println("Fail");
-//                System.out.println("Fail");
-//                System.out.println("Fail");
-//            }
+    fun fetchPurchase(pageNumber: Int) {
+        homeRepository.getPurchases(pageNumber, object : Callback<History> {
             override fun onResponse(p0: Call<History>, p1: Response<History>) {
-                if(p1.isSuccessful){
-                    _purchaseData.value = p1.body();
-                    System.out.println("HomeViewModal: Success");
-                    System.out.println("HomeViewModal: Success");
-                    System.out.println("HomeViewModal: Success");
-                    System.out.println("HomeViewModal: Success");
-                    System.out.println(_purchaseData.value);
-                }else{
-                    _purchaseData.value=null
+                if (p1.isSuccessful) {
+                    _purchaseData.value = p1.body()
+                } else {
+                    _purchaseData.value = null
                 }
             }
 
             override fun onFailure(p0: Call<History>, p1: Throwable) {
-                _purchaseData.value=null
-                System.out.println(p1.message);
-                System.out.println("Fail");
-                System.out.println("Fail");
-                System.out.println("Fail");
-                System.out.println("Fail");
+                _purchaseData.value = null
             }
-
         })
     }
+
+
     fun fetchHomeProduct(type: String) {
         homeRepository.getHomeProduct(type).enqueue(object: Callback<List<HomeProduct>> {
             override fun onResponse(call: Call<List<HomeProduct>>,response: Response<List<HomeProduct>>

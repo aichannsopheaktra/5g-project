@@ -91,9 +91,11 @@ class ProductFragment : Fragment(R.layout.fragment_product) {
             } else {
                 adapter.setProData(ArrayList(products)) // Convert products to ArrayList if necessary
             }
+
             recyclerView.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
         })
+
 
         viewModel.categoriesData.observe(viewLifecycleOwner, Observer { categories ->
             // Clear existing views in categoryContainer

@@ -59,7 +59,10 @@ interface ApiInterface {
     fun purchase(@Url url: String, @HeaderMap headers: Map<String, String>): Call<Void>
     
     @GET("CustomerAPI/purchases")
-    fun getPurchases(@HeaderMap headers: Map<String, String>): Call<History>
+    fun getPurchases(
+        @HeaderMap headers: Map<String, String>,
+        @Query("pageNumber") pageNumber: Int
+    ): Call<History>
 
     @GET
     fun sendEmail(@Url email: String): Call<PinResponse>

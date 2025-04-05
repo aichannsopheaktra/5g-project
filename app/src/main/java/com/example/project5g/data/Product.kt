@@ -6,14 +6,14 @@ data class Product(
     val supplierId: String,
     val barcode: String,
     val name: String,
-    val price: Int,
+    val price: Float, // Change to Float
     val stock: Int,
-    val ws_price: Int,
-    val ws: Int,
+    val ws_price: Float, // Change to Float
+    val ws: Float, // Change to Float
     val image: String?,
     val imageURL: String,
     val createDate: String,
     val discount: Int,
     val category: Categories,
-    val supplier: Any? // Assuming supplier can be any type or null
+    val supplier: Any?
 )

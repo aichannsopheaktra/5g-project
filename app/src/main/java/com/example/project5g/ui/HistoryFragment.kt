@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -26,7 +27,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-class HistoryFragment : Fragment(R.layout.fragment_history){
+class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
@@ -38,33 +39,72 @@ class HistoryFragment : Fragment(R.layout.fragment_history){
     }
 
     private val viewModel: HomeViewModel by viewModels { factory }
+    private var isLoading = false
+    private var currentPage = 1
+    private var totalPages = 1
+    private var isLastPage = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        val view =inflater.inflate(R.layout.fragment_history,container,false)
-        recyclerView =view.findViewById(R.id.recyclerViewHistory);
-        progressBar= view.findViewById(R.id.progressHistory);
-        initAdpater();
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_history, container, false)
+        recyclerView = view.findViewById(R.id.recyclerViewHistory)
+        progressBar = view.findViewById(R.id.progressHistory)
+        initAdapter()
+        initScrollListener() // Add scroll listener for infinite scroll
         return view
     }
-    private fun initAdpater(){
-        adapter = HistoryAdapter(requireContext(), ArrayList(),viewModel,this);
-        recyclerView.layoutManager =LinearLayoutManager(requireContext());
-        recyclerView.adapter= adapter;
 
+    private fun initAdapter() {
+        adapter = HistoryAdapter(requireContext(), ArrayList(), this)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+    }
+
+    private fun initScrollListener() {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if (!isLoading && !isLastPage) {
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                        loadMoreData()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun loadMoreData() {
+        isLoading = true
+        progressBar.visibility = View.VISIBLE
+        currentPage++
+        viewModel.fetchPurchase(currentPage)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetchPurchase();
-        initViewModel();
+        viewModel.fetchPurchase(currentPage)
+        initViewModel()
     }
-    private fun initViewModel(){
-        viewModel.purchaseData.observe(viewLifecycleOwner, Observer { purchaseItem->
-            recyclerView.visibility = View.VISIBLE
-            adapter.setPurchase(purchaseItem?.data as ArrayList<Purchases>)
-            progressBar.visibility = View.GONE
 
+    private fun initViewModel() {
+        viewModel.purchaseData.observe(viewLifecycleOwner, Observer { historyResponse ->
+            recyclerView.visibility = View.VISIBLE
+            historyResponse?.let {
+                totalPages = it.pagination.totalPages ?: 1
+
+                // Check if we are on the last page
+                isLastPage = currentPage >= totalPages
+
+                // Add new data to adapter
+                adapter.setPurchase(it.data as ArrayList<Purchases>)
+            }
+            progressBar.visibility = View.GONE
+            isLoading = false
         })
     }
 
